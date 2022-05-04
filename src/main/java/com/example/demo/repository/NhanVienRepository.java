@@ -14,13 +14,13 @@ import java.util.List;
 public interface NhanVienRepository extends JpaRepository<NHAN_VIEN, String> {
     @Modifying
     @Transactional
-    @Query(value = "SELECT * FROM NHAN_VIEN a, TAI_KHOAN_NV b WHERE a.cmnd=b.cmnd", nativeQuery = true)
+    @Query(value = "SELECT * FROM NHAN_VIEN a ", nativeQuery = true)
     List<NHAN_VIEN> getAllNhanVien();
 
-    @Modifying
-    @Transactional
-    @Query(value = "select * from nhan_vien, tai_khoan_nv where nhan_vien.cmnd=tai_khoan_nv.cmnd and nhan_vien.cmnd=:id", nativeQuery = true)
-    List<NHAN_VIEN> getbyID(String id);
+//    @Modifying
+//    @Transactional
+//    @Query(value = "select * from nhan_vien, tai_khoan_nv where nhan_vien.cmnd=tai_khoan_nv.cmnd and nhan_vien.cmnd=:id", nativeQuery = true)
+//    List<NHAN_VIEN> getbyID(String id);
 
 
 //    @Modifying

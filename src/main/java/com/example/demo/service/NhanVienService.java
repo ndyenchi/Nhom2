@@ -57,11 +57,11 @@ public class NhanVienService {
                 .map(this::convertEntityToDto)
                 .collect(Collectors.toList());
     }
-    public List<NhanVienDto> getByID(String id){
-        return repo.getbyID(id).stream()
-                .map(this::convertEntityToDto)
-                .collect(Collectors.toList());
-    }
+//    public List<NhanVienDto> getByID(String id){
+//        return repo.getbyID(id).stream()
+//                .map(this::convertEntityToDto)
+//                .collect(Collectors.toList());
+//    }
 //    public void insert( String a,  String b,  boolean c, String hoten,
 //                       Date d, String e0, String f,
 //                        String g, boolean h, String i) {

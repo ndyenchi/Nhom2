@@ -21,15 +21,15 @@ public class NhanVienController {
     @Autowired
     TaiKhoanNVService taiKhoanNVService;
 
-    @GetMapping("getALl")
+    @GetMapping("getAll")
     public List<NhanVienDto> get() {
        return nhanVienService.getALlNhanVien();
     }
 
-    @GetMapping("{cmnd}")
-    public List<NhanVienDto> getByID(@PathVariable String cmnd) {
-        return nhanVienService.getByID(cmnd);
-    }
+//    @GetMapping("{cmnd}")
+//    public List<NhanVienDto> getByID(@PathVariable String cmnd) {
+//        return nhanVienService.getByID(cmnd);
+//    }
 
 //    @PostMapping("insert")
 //    public void insert (@RequestBody NhanVienDto a, @RequestBody TaiKhoanNVDto b){
