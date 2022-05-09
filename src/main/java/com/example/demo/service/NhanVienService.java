@@ -1,20 +1,17 @@
 package com.example.demo.service;
 
 import com.example.demo.DTO.NhanVienDto;
-import com.example.demo.DTO.TaiKhoanNVDto;
+import com.example.demo.DTO.TaiKhoan_NhanVien;
 import com.example.demo.entity.NHAN_VIEN;
-import com.example.demo.entity.TAI_KHOAN_NV;
 import com.example.demo.repository.NhanVienRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
+
 @Service
 public class NhanVienService {
     @Autowired
@@ -37,28 +34,16 @@ public class NhanVienService {
         user = modelMapper.map(userLocationDTO, NHAN_VIEN.class);
         return user;
     }
-    private TaiKhoanNVDto convertEntityToDto1(TAI_KHOAN_NV user){
-        modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.LOOSE);
-        TaiKhoanNVDto userLocationDTO = new TaiKhoanNVDto();
-        userLocationDTO = modelMapper.map(user, TaiKhoanNVDto.class);
-        return userLocationDTO;
-    }
 
-    private TAI_KHOAN_NV convertDtoToEntity1(TaiKhoanNVDto userLocationDTO){
-        modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.LOOSE);
-        TAI_KHOAN_NV user = new TAI_KHOAN_NV();
-        user = modelMapper.map(userLocationDTO, TAI_KHOAN_NV.class);
-        return user;
-    }
-    public List<NhanVienDto> getALlNhanVien(){
-        return repo.getAllNhanVien().stream()
-                .map(this::convertEntityToDto)
-                .collect(Collectors.toList());
-    }
+
+    public List<NhanVienDto> chichi(){
+    return repo.findAll()
+            .stream()
+            .map(this::convertEntityToDto)
+            .collect(Collectors.toList());
+}
 //    public List<NhanVienDto> getByID(String id){
-//        return repo.getbyID(id).stream()
+//        return repo.findBytaiKhoanNv_MaNV(id).stream()
 //                .map(this::convertEntityToDto)
 //                .collect(Collectors.toList());
 //    }

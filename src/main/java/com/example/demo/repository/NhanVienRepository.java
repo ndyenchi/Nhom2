@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.DTO.TaiKhoan_NhanVien;
 import com.example.demo.entity.NHAN_VIEN;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,15 +13,17 @@ import java.util.List;
 
 @Repository
 public interface NhanVienRepository extends JpaRepository<NHAN_VIEN, String> {
-    @Modifying
-    @Transactional
-    @Query(value = "SELECT * FROM NHAN_VIEN a ", nativeQuery = true)
-    List<NHAN_VIEN> getAllNhanVien();
+//    @Modifying
+//    @Transactional
+//    @Query(value = "SELECT new com.example.demo.DTO.TaiKhoan_NhanVien(c.SDT , c.HO_TEN, c.NGAY_SINH,c.CMND,c.EMAIL, c.GIOI_TINH, p.USERNAME, p.TRANG_THAI, p.MA_QUYEN)" +
+//            "            FROM NHAN_VIEN c" +
+//            "INNER JOIN TAI_KHOAN_NV p ON c.CMND=p.CMND ", nativeQuery = true)
+//    List<TaiKhoan_NhanVien> getAllNhanVien();
 
 //    @Modifying
 //    @Transactional
 //    @Query(value = "select * from nhan_vien, tai_khoan_nv where nhan_vien.cmnd=tai_khoan_nv.cmnd and nhan_vien.cmnd=:id", nativeQuery = true)
-//    List<NHAN_VIEN> getbyID(String id);
+ //       List<NHAN_VIEN> findBytaiKhoanNv_MaNV(String maNV);
 
 
 //    @Modifying
