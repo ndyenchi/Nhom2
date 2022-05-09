@@ -31,13 +31,14 @@ public class NhanVienController {
     public static List<NhanVienDto> dsNhanVien;
     public static List<TaiKhoanNVDto> dsTaiKhoan;
 
-    public static List<TaiKhoan_NhanVien> dsTaiKhoan_NhanVien=new ArrayList<>();
+    public static List<TaiKhoan_NhanVien> dsTaiKhoan_NhanVien;
 
 
     @GetMapping("getAll")
     public List<TaiKhoan_NhanVien> listal() {
         dsNhanVien=nhanVienService.chichi();
         dsTaiKhoan=taiKhoanNVService.ListAll();
+        dsTaiKhoan_NhanVien=new ArrayList<>();
       for(NhanVienDto nv:dsNhanVien){
           System.out.println("nhan vien "+nv.getCmnd());
           for(TaiKhoanNVDto tk:dsTaiKhoan){
@@ -49,27 +50,35 @@ public class NhanVienController {
               }
           }
       }
-      for(NhanVienDto nv:dsNhanVien){
-          System.out.println("nhanvien: "+nv.getCmnd());
-      }
       return dsTaiKhoan_NhanVien;
     }
 
-        @GetMapping("test")
-    public List<NhanVienDto> chichi() {
-        return nhanVienService.chichi();
+
+    @GetMapping("{cmnd}")
+    public List<TaiKhoan_NhanVien> getByID(@PathVariable String cmnd) {
+        dsNhanVien=nhanVienService.chichi();
+        dsTaiKhoan=taiKhoanNVService.ListAll();
+        dsTaiKhoan_NhanVien=new ArrayList<>();
+        for(NhanVienDto nv:dsNhanVien){
+            System.out.println("nhan vien "+nv.getCmnd());
+            for(TaiKhoanNVDto tk:dsTaiKhoan){
+                System.out.println("taikhoan :"+tk.getUsername());
+                if(tk.getMaNVCmnd().equals(nv.getCmnd()) && tk.getMaNVCmnd().equals(cmnd)){
+                    TaiKhoan_NhanVien t= new TaiKhoan_NhanVien(nv.getSdt(),nv.getHoTen(), nv.getNgaySinh(),nv.getCmnd(),
+                            nv.getEmail(), nv.getGioiTinh(),tk.getUsername(),tk.getTrangThai(), tk.getQUYENMaQuyen());
+                    dsTaiKhoan_NhanVien.add(t);
+                }
+            }
+        }
+
+        return dsTaiKhoan_NhanVien;
     }
 
-//    @GetMapping("{cmnd}")
-//    public List<NhanVienDto> getByID(@PathVariable String cmnd) {
-//        return nhanVienService.getByID(cmnd);
-//    }
-
-//    @PostMapping("insert")
-//    public void insert (@RequestBody NhanVienDto a, @RequestBody TaiKhoanNVDto b){
-//        nhanVienService.insert(a.getCmnd(),a.getEmail(),a.getGioiTinh(),a.getHoTen(),a.getNgaySinh(),a.getSdt(),b.getUsername()
-//        ,b.getPassword(),b.getTrangThai(),b.getQUYENMaquyen());
-//    }
+        @PostMapping("insert")
+    public void insert (@RequestBody TaiKhoan_NhanVien a){
+        nhanVienService.insert(a.getSdt(),a.getHoTen(),a.getNgaySinh(),a.getCmnd(),a.getEmail(),a.getGioiTinh());
+        taiKhoanNVService.insert(a.getUsername(),a.getPassword(),a.getTrangThai(),a.getMaQuyen(),a.getCmnd());
+    }
     @PostMapping("delete/{id}")
     public ResponseEntity deletNhanVien(@RequestHeader Map<String, String> headers, @PathVariable String id){
         if (!ValidationHeader.IsAdmin(headers)) {

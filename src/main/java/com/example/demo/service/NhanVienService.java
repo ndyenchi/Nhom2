@@ -9,6 +9,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,27 +38,21 @@ public class NhanVienService {
 
 
     public List<NhanVienDto> chichi(){
+        System.out.println(repo.findAll().size());
     return repo.findAll()
             .stream()
             .map(this::convertEntityToDto)
             .collect(Collectors.toList());
 }
-//    public List<NhanVienDto> getByID(String id){
-//        return repo.findBytaiKhoanNv_MaNV(id).stream()
-//                .map(this::convertEntityToDto)
-//                .collect(Collectors.toList());
-//    }
-//    public void insert( String a,  String b,  boolean c, String hoten,
-//                       Date d, String e0, String f,
-//                        String g, boolean h, String i) {
-//        NhanVienDto dto=new NhanVienDto(e0,hoten,d,a,b,c);
-//        TaiKhoanNVDto dto1=new TaiKhoanNVDto(f,g,h,i);
-//        NHAN_VIEN e= convertDtoToEntity(dto);
-//        TAI_KHOAN_NV e1=convertDtoToEntity1(dto1);
-//        repo.insert(e.getCmnd(),e.getEmail(),e.getGioiTinh()
-//                ,e.getHoTen(),e.getNgaySinh(),e.getSdt(),e1.getUsername(),e1.getPassword(),e1.getTrangThai(),
-//                e1.getQUYEN().getMaQuyen());
-//    }
+
+
+
+    public void insert( String sdt,String hoten, Date ngaySInh,String cmnd,String email,boolean gioiTinh) {
+        NhanVienDto dto=new NhanVienDto( sdt, hoten,  ngaySInh, cmnd, email, gioiTinh);
+
+        NHAN_VIEN e= convertDtoToEntity(dto);
+        repo.insert(e.getCmnd(),e.getEmail(),e.getGioiTinh(),e.getHoTen(),e.getNgaySinh(),e.getSdt());
+    }
 
 
 
