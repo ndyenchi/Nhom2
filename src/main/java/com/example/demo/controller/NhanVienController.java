@@ -4,6 +4,7 @@ import com.example.demo.DTO.NhanVienDto;
 import com.example.demo.DTO.TaiKhoanNVDto;
 import com.example.demo.DTO.TaiKhoan_NhanVien;
 import com.example.demo.entity.NHAN_VIEN;
+import com.example.demo.entity.TAI_KHOAN_NV;
 import com.example.demo.helper.ResponseHelper;
 import com.example.demo.helper.ValidationHeader;
 import com.example.demo.repository.NhanVienRepository;
@@ -75,11 +76,15 @@ public class NhanVienController {
     }
 
         @PostMapping("insert")
-    public void insert (@RequestBody TaiKhoan_NhanVien a){
-        nhanVienService.insert(a.getSdt(),a.getHoTen(),a.getNgaySinh(),a.getCmnd(),a.getEmail(),a.getGioiTinh());
-        taiKhoanNVService.insert(a.getUsername(),a.getPassword(),a.getTrangThai(),a.getMaQuyen(),a.getCmnd());
-    }
-    @PostMapping("delete/{id}")
+    public void insert (@RequestBody TaiKhoan_NhanVien a) {
+//        nhanVienService.insert(a.getSdt(),a.getHoTen(),a.getNgaySinh(),a.getCmnd(),a.getEmail(),a.getGioiTinh());
+//        taiKhoanNVService.insert(a.getUsername(),a.getPassword(),a.getTrangThai(),a.getMaQuyen(),a.getCmnd());
+//
+            NHAN_VIEN nv = new NHAN_VIEN(a.getSdt(), a.getHoTen(), a.getNgaySinh(), a.getCmnd(), a.getEmail(), a.getGioiTinh());
+            TAI_KHOAN_NV tk = new TAI_KHOAN_NV(a.getUsername(), a.getPassword(), a.getTrangThai());
+            nhanVienService.save(nv);
+            taiKhoanNVService.save(tk);
+        }@PostMapping("delete/{id}")
     public ResponseEntity deletNhanVien(@RequestHeader Map<String, String> headers, @PathVariable String id){
         if (!ValidationHeader.IsAdmin(headers)) {
             return ResponseHelper.GenerateResponse(false, "You are not allow to do this action", HttpStatus.FORBIDDEN);

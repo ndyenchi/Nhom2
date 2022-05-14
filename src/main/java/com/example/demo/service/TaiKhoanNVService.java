@@ -55,4 +55,7 @@ public class TaiKhoanNVService {
         repo.deleteNhanVien(id);
     }
 
+    public <S extends TAI_KHOAN_NV> S save(S entity) {
+        return repo.save(entity);
+    }
 }

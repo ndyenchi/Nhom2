@@ -17,4 +17,13 @@ public class KhachHangDto  {
     private  String luuY;
     private  String email;
     private  String maKH;
+
+    public KhachHangDto(String hoTen, Date ngaySinh, String diaChi, String danhGiatiemNang, String luuY, String email) {
+        this.hoTen = hoTen;
+        this.ngaySinh = ngaySinh;
+        this.diaChi = diaChi;
+        this.danhGiatiemNang = danhGiatiemNang;
+        this.luuY = luuY;
+        this.email = email;
+    }
 }

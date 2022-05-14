@@ -54,6 +54,7 @@ public class NhanVienService {
         repo.insert(e.getCmnd(),e.getEmail(),e.getGioiTinh(),e.getHoTen(),e.getNgaySinh(),e.getSdt());
     }
 
-
-
+    public <S extends NHAN_VIEN> S save(S entity) {
+        return repo.save(entity);
+    }
 }

@@ -47,8 +47,8 @@ public class KhachHangController {
 
     }
 
-//    @PostMapping("edit/{maKH}")
-//    public void edit(KhachHangDto d){
-//        khachHangService.edit(d);
-//    }
+    @PostMapping("edit/{maKH}")
+    public void edit(@RequestBody KhachHangDto d,@PathVariable String maKH ){
+        khachHangService.edit(d, maKH);
+    }
 }

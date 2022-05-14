@@ -36,5 +36,12 @@ public class NHAN_VIEN {
     @Column(name="GIOI_TINH")
     private Boolean gioiTinh;
 
-
+    public NHAN_VIEN(String sdt, String hoTen, Date ngaySinh, String cmnd, String email, Boolean gioiTinh) {
+        this.sdt = sdt;
+        this.hoTen = hoTen;
+        this.ngaySinh = ngaySinh;
+        this.cmnd = cmnd;
+        this.email = email;
+        this.gioiTinh = gioiTinh;
+    }
 }

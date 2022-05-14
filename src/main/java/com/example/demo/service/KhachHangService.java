@@ -58,9 +58,9 @@ public class KhachHangService {
         repo.deleteById(s);
     }
 
-//    public void edit(KhachHangDto d){
-//        repo.editByMa(d.getHoTen(),d.getNgaySinh(),d.getDiaChi(),d.getDanhGiatiemNang(),d.getLuuY(), d.getMaKH());
-//    }
+    public void edit(KhachHangDto d, String maKH){
+        repo.editByMa(d.getHoTen(),d.getNgaySinh(),d.getDiaChi(),d.getDanhGiatiemNang(),d.getLuuY(), maKH );
+    }
 
     public <S extends KHACH_HANG> S save(S entity) {
         return repo.save(entity);

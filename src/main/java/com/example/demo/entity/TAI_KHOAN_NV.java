@@ -27,4 +27,11 @@ public class TAI_KHOAN_NV {
     @ManyToOne
     @JoinColumn(name="CMND")
     private NHAN_VIEN maNV;
+
+    public TAI_KHOAN_NV(String username,String password, Boolean trangThai) {
+        this.username=username;
+        this.password = password;
+        this.trangThai = trangThai;
+
+    }
 }
