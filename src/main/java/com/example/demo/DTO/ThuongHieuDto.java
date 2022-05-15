@@ -1,6 +1,7 @@
 package com.example.demo.DTO;
 
 import com.example.demo.entity.THUONG_HIEU;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @Data

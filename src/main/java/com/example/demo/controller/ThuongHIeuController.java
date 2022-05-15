@@ -42,10 +42,10 @@ public class ThuongHIeuController {
     }
 
      //edit thông tin theo mã
-    @PostMapping("/edit/{maThuongHieu}")
-    public void edit1ThuongHieu(@PathVariable @RequestBody String maThuongHieu,
-                                @RequestBody String tenThuongHieu) {
-        thuongHieuService.editByMa(maThuongHieu, tenThuongHieu);
+    @PatchMapping("/edit/{maThuongHieu}")
+    public void edit1ThuongHieu(@PathVariable String maThuongHieu,
+                                @RequestBody ThuongHieuDto thuongHieu) {
+        thuongHieuService.editByMa(maThuongHieu, thuongHieu.getTenThuongHieu());
     }
     //=== thêm thương hiệu======
     @PostMapping("insert")
@@ -53,8 +53,8 @@ public class ThuongHIeuController {
         thuongHieuService.insert(thuonghieu.getMaThuongHieu(),thuonghieu.getTenThuongHieu());
     }
     //========= delete thuong hiệu
-    @DeleteMapping("delete")
-    public void delete (@RequestBody String id){
+    @DeleteMapping("delete/{id}")
+    public void delete (@PathVariable String id){
         thuongHieuService.delete(id);
     }
 }
