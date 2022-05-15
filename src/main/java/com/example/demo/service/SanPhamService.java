@@ -1,8 +1,10 @@
 package com.example.demo.service;
 
 
+import com.example.demo.DTO.KhoSPDto;
 import com.example.demo.DTO.SanPhamDto;
 import com.example.demo.DTO.ThuongHieuDto;
+import com.example.demo.entity.KHO_SP;
 import com.example.demo.entity.SAN_PHAM;
 import com.example.demo.entity.THUONG_HIEU;
 import com.example.demo.repository.SanPhamRepository;
@@ -31,16 +33,19 @@ public class SanPhamService {
 
     }
 
-    public Optional<SAN_PHAM> get(Integer id){
-        return repo.findById(id);
+    public SanPhamDto getbyID(Integer id){
+        Optional<SAN_PHAM> e=repo.findById(id);
+        SanPhamDto dto = convertEntityToDto(e.get());
+        return dto;
     }
 
     public void delete(Integer id){
         repo.deleteById(id);
     }
 
-    public void save(SAN_PHAM SP){
-        repo.save(SP);
+    public void save(SanPhamDto sp){
+        SAN_PHAM e = convertDtoToEntity(sp);
+        repo.save(e);
     }
 
     public List<SanPhamDto> select(String gioiTinh){

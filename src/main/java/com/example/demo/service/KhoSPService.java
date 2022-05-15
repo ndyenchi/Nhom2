@@ -1,31 +1,72 @@
 package com.example.demo.service;
 
+import com.example.demo.DTO.KhoSPDto;
+import com.example.demo.DTO.SanPham_khoSP;
+import com.example.demo.DTO.ThuongHieuDto;
 import com.example.demo.entity.KHO_SP;
+import com.example.demo.entity.SAN_PHAM;
+import com.example.demo.entity.THUONG_HIEU;
 import com.example.demo.repository.KhoSPRepository;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class KhoSPService {
 
     @Autowired
     private KhoSPRepository repo;
-    public List<KHO_SP> ListAll(){
-        return (List<KHO_SP>) repo.findAll();
+    @Autowired
+    ModelMapper modelMapper;
+
+    private KhoSPDto convertEntityToDto(KHO_SP user){
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
+        KhoSPDto userLocationDTO = new KhoSPDto();
+        userLocationDTO = modelMapper.map(user, KhoSPDto.class);
+        return userLocationDTO;
     }
 
-    public Optional<KHO_SP> get(Integer id){
-        return repo.findById(id);
+    private KHO_SP convertDtoToEntity(KhoSPDto userLocationDTO){
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
+        KHO_SP user = new KHO_SP();
+        user = modelMapper.map(userLocationDTO, KHO_SP.class);
+        return user;
+    }
+    public List<KhoSPDto> ListAll(){
+        return  repo.findAll()
+                .stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
+
+    }
+
+    public KhoSPDto getbyID(Integer id){
+        Optional<KHO_SP> e=repo.findById(id);
+        KhoSPDto dto = convertEntityToDto(e.get());
+        return dto;
     }
 
     public void delete(Integer id){
         repo.deleteById(id);
     }
 
-    public void save(KHO_SP KhoSP){
-        repo.save(KhoSP);
+    public void save(KhoSPDto dto){
+        KHO_SP e=convertDtoToEntity(dto);
+        repo.save(e);
     }
+
+    public List<KhoSPDto> findByMaSp(Integer maSP){
+        return repo.findByMaSP_MaSP(maSP)
+                .stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
+    }
+
 }

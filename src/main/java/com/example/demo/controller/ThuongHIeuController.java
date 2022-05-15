@@ -44,7 +44,8 @@ public class ThuongHIeuController {
      //edit thông tin theo mã
     @PatchMapping("/edit/{maThuongHieu}")
     public void edit1ThuongHieu(@PathVariable String maThuongHieu,
-                                @RequestBody ThuongHieuDto thuongHieu) {
+                                @RequestBody THUONG_HIEU thuongHieu) {
+    //    thuongHieuService.save(thuongHieu);
         thuongHieuService.editByMa(maThuongHieu, thuongHieu.getTenThuongHieu());
     }
     //=== thêm thương hiệu======

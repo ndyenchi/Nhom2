@@ -24,7 +24,7 @@ public class KHO_SP {
     @Id
     @GeneratedValue
     @Column(name="ID_KHO")
-    private Integer IdKho;
+    private Integer idKho;
     @OneToMany(mappedBy = "idKho_GioHang", cascade = CascadeType.ALL)
     Collection<GIO_HANG> gioHang;
     @OneToMany(mappedBy = "idKho_HDNhap",cascade = CascadeType.ALL)
