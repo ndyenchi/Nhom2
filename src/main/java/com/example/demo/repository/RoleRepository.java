@@ -10,11 +10,11 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 
 @Repository
-public interface RoleRepository extends JpaRepository<ROLE, Integer> {
+public interface RoleRepository extends JpaRepository<ROLE, String> {
     @Modifying
     @Transactional
     @Query("UPDATE ROLE t SET t.tenQuyen =:tenQuyen  WHERE t.maQuyen=:maQuyen")
-    void editByMa(@Param("maQuyen") int ma, @Param("tenQuyen") String ten);
+    void editByMa(@Param("maQuyen") String ma, @Param("tenQuyen") String ten);
 
     @Modifying
     @Transactional

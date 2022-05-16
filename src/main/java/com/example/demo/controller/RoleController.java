@@ -1,8 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.DTO.RoleDto;
 import com.example.demo.entity.ROLE;
+import com.example.demo.helper.ResponseHelper;
 import com.example.demo.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,40 +20,45 @@ public class RoleController {
 
     //lay toàn bộ thông tin
     @GetMapping("get")
-    public List<ROLE> get() {
-        List<ROLE> roleList = roleService.ListAll();
+    public List<RoleDto> get() {
+        List<RoleDto> roleList = roleService.ListAll();
         return roleList;
     }
     // lay thông tin theo mã
     @GetMapping("{maQuyen}")
-    public String get1(  @PathVariable int maQuyen) {
-        Optional<ROLE> t=roleService.get(maQuyen);
-        String a=t.toString();
-        return a;
+    public RoleDto get1(  @PathVariable String maQuyen) {
+        return roleService.findByID(maQuyen);
     }
     // chỉnh sửa toàn bộ tên theo mã có sẵn trong database
     @PostMapping("/edit")
-    public List<ROLE> postThuongHieu(@RequestBody ROLE role) {
-        List<ROLE> List = roleService.ListAll();
+    public List<RoleDto> postThuongHieu(@RequestBody RoleDto role) {
+        List<RoleDto> List = roleService.ListAll();
         List.add(role);
         roleService.save(role);
         return List;
     }
 
     //            edit thông tin theo mã
-    @PostMapping("/edit/{maQuyen}")
-    public void edit1(@PathVariable @RequestBody int maQuyen,
-                      @RequestBody String tenQuyen) {
-        roleService.editByMa(maQuyen, tenQuyen);
+    @PatchMapping("/edit/{maQuyen}")
+    public ResponseEntity edit1(@PathVariable String maQuyen,
+                      @RequestBody RoleDto quyen) {
+        quyen.setMaQuyen(maQuyen);
+        roleService.save(quyen);
+        return ResponseHelper.GenerateResponse(true, "Edit role success", HttpStatus.OK);
+
     }
     //   ======================= thêm =======================
     @PostMapping("insert")
-    public void insert (@RequestBody ROLE role){
+    public ResponseEntity insert (@RequestBody ROLE role){
         roleService.insert(role.getMaQuyen(),role.getTenQuyen());
+        return ResponseHelper.GenerateResponse(true, "Create role success", HttpStatus.OK);
+
     }
     //======================= delete =================
-    @DeleteMapping("delete")
-    public void delete (@RequestBody int id){
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity delete (@PathVariable String id){
         roleService.delete(id);
+        return ResponseHelper.GenerateResponse(true, "Delete role success", HttpStatus.OK);
+
     }
 }

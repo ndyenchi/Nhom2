@@ -40,8 +40,9 @@ public class ThuongHieuService {
        return dto;
    }
 
-    public void save(THUONG_HIEU thuongHieu) {
-            repo.save(thuongHieu);
+    public void save(ThuongHieuDto thuongHieu) {
+        THUONG_HIEU e=convertDtoToEntity(thuongHieu);
+            repo.save(e);
     }
 
     public void insert(String maThuongHieu, String tenThuongHieu) {

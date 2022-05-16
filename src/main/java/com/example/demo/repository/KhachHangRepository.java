@@ -17,4 +17,9 @@ public interface KhachHangRepository extends JpaRepository<KHACH_HANG, String> {
     @Query(value = "UPDATE KHACH_HANG SET HO_TEN =:hoTen, NGAY_SINH=:ngaySinh,DIA_CHI=:diaChi,DANH_GIA_TIEM_NANG=:danhGia,LUU_Y=:luuY  WHERE MAKH=:maKH", nativeQuery = true)
     void editByMa(@Param("hoTen") String a, @Param("ngaySinh") Date b, @Param("diaChi") String c, @Param("danhGia") String e, @Param("luuY") String f, @Param("maKH") String g);
 
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO KHACH_HANG (HO_TEN, DIA_CHI, EMAIL, MAKH) VALUES  (:hoTen, :diaChi, :email, :maKH)",nativeQuery = true)
+    void insert(@Param("hoTen") String ten, @Param("diaChi") String addr, @Param("email") String email, @Param("maKH") String makh);
+
 }

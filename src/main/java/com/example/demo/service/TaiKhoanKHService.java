@@ -27,4 +27,7 @@ public class TaiKhoanKHService {
     public void save(TAI_KHOAN_KH TaiKhoanKH){
         repo.save(TaiKhoanKH);
     }
+    public void insert(String username, String password, String maKH){
+        repo.insert(username, password, maKH);
+    }
 }

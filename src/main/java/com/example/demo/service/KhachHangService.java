@@ -62,7 +62,18 @@ public class KhachHangService {
         repo.editByMa(d.getHoTen(),d.getNgaySinh(),d.getDiaChi(),d.getDanhGiatiemNang(),d.getLuuY(), maKH );
     }
 
+    public void save( KhachHangDto dto) {
+        KHACH_HANG ent =convertDtoToEntity(dto);
+        repo.save(ent);
+    }
+
     public <S extends KHACH_HANG> S save(S entity) {
         return repo.save(entity);
     }
+
+    public void insert(String hoTen, String diaChi, String email, String maKh){
+        repo.insert(hoTen, diaChi, email, maKh);
+    }
+
 }
+

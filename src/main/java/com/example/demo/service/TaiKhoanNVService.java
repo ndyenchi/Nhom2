@@ -9,6 +9,8 @@ import com.example.demo.repository.TaiKhoanNVRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +48,13 @@ public class TaiKhoanNVService {
                 .map(this::convertEntityToDto)
                 .collect(Collectors.toList());
     }
-    public void insert( String f, String g,  Boolean h,String i, String k) {
+    public List<TAI_KHOAN_NV> ListAll1() {
+        return repo.findAll();
+    }
+
+
+
+    public void insert(String f, String g, Boolean h, String i, String k) {
         TaiKhoanNVDto dto=new TaiKhoanNVDto(f,g,h,i,k);
         TAI_KHOAN_NV e= convertDtoToEntity(dto);
         repo.insert(e.getUsername(),e.getPassword(),e.getTrangThai(),e.getQUYEN().getMaQuyen(),e.getMaNV().getCmnd());

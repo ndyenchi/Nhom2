@@ -20,7 +20,7 @@ public class KHACH_HANG {
     @Column(name="HO_TEN")
     private String hoTen;
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern="DD/MM/YYYY")
+    @DateTimeFormat(pattern="YYYY-MM-DD")
     @Column(name="NGAY_SINH")
     private Date ngaySinh;
     @Column(name="DIA_CHI")
@@ -46,4 +46,13 @@ public class KHACH_HANG {
     @OneToMany(mappedBy = "idKho_GioHang")
     private Collection<GIO_HANG> gioHang;
 
+    public KHACH_HANG(String hoTen, Date ngaySinh, String diaChi, String danhGiatiemNang, String luuY, String email, String maKH) {
+        this.hoTen = hoTen;
+        this.ngaySinh = ngaySinh;
+        this.diaChi = diaChi;
+        this.danhGiatiemNang = danhGiatiemNang;
+        this.luuY = luuY;
+        this.email = email;
+        this.maKH = maKH;
+    }
 }

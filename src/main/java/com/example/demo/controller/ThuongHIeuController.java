@@ -2,8 +2,10 @@ package com.example.demo.controller;
 
 import com.example.demo.DTO.ThuongHieuDto;
 import com.example.demo.entity.THUONG_HIEU;
+import com.example.demo.helper.ResponseHelper;
 import com.example.demo.service.ThuongHieuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,26 +38,29 @@ public class ThuongHIeuController {
         return dto;
     }
 // chỉnh sửa toàn bộ tên theo mã có sẵn trong database
-    @PostMapping("/edit")
-    public void postThuongHieu(@RequestBody THUONG_HIEU thuongHieu) {
-        thuongHieuService.save(thuongHieu);
-    }
+
 
      //edit thông tin theo mã
     @PatchMapping("/edit/{maThuongHieu}")
-    public void edit1ThuongHieu(@PathVariable String maThuongHieu,
-                                @RequestBody THUONG_HIEU thuongHieu) {
-    //    thuongHieuService.save(thuongHieu);
-        thuongHieuService.editByMa(maThuongHieu, thuongHieu.getTenThuongHieu());
+    public ResponseEntity edit1ThuongHieu(@PathVariable String maThuongHieu,
+                                @RequestBody ThuongHieuDto thuongHieu) {
+       thuongHieu.setMaThuongHieu(maThuongHieu);
+        thuongHieuService.save(thuongHieu);
+        return ResponseHelper.GenerateResponse(true, "Edit category success", HttpStatus.OK);
+
     }
     //=== thêm thương hiệu======
+
     @PostMapping("insert")
-    public void insert (@RequestBody THUONG_HIEU thuonghieu){
+    public ResponseEntity insert (@RequestBody ThuongHieuDto thuonghieu){
         thuongHieuService.insert(thuonghieu.getMaThuongHieu(),thuonghieu.getTenThuongHieu());
+        return ResponseHelper.GenerateResponse(true, "Create category success", HttpStatus.OK);
+
     }
     //========= delete thuong hiệu
     @DeleteMapping("delete/{id}")
-    public void delete (@PathVariable String id){
+    public ResponseEntity delete (@PathVariable String id){
         thuongHieuService.delete(id);
+        return ResponseHelper.GenerateResponse(true, "Delete category success", HttpStatus.OK);
     }
 }

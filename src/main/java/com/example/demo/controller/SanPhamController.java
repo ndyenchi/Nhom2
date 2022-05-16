@@ -4,11 +4,13 @@ package com.example.demo.controller;
 import com.example.demo.DTO.*;
 import com.example.demo.entity.KHO_SP;
 import com.example.demo.entity.SAN_PHAM;
+import com.example.demo.helper.ResponseHelper;
 import com.example.demo.service.KhoSPService;
 import com.example.demo.service.SanPhamService;
 import lombok.Getter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,18 +57,22 @@ public class SanPhamController {
 
     }
     @PostMapping()
-    public void insert (@RequestBody SanPham_khoSP sp){
+    public ResponseEntity insert (@RequestBody SanPham_khoSP sp){
         SanPhamDto a= new SanPhamDto(sp.getMaSP(),sp.getTenSP(),sp.getGioiTinh(),sp.getMoTa(),sp.getGia(),
                 sp.getMaThuongHieu());
         sanPhamSV.save(a);
         KhoSPDto b= new KhoSPDto(sp.getSize(),sp.getSoLuongTon(),sp.getMau(),sp.getMaSP(),sp.getHinhAnh(),sp.getIdKho() );
         khoSPService.save(b);
+        return ResponseHelper.GenerateResponse(true, "Create product success", HttpStatus.OK);
+
     }
     @DeleteMapping("{id}")
-    public void delete(@PathVariable Integer id){
+    public ResponseEntity delete(@PathVariable Integer id){
         khoSPService.delete(id);
         KhoSPDto a=khoSPService.getbyID(id);
         System.out.println(a.getMaSPMaSP());
         sanPhamSV.delete(a.getMaSPMaSP());
+        return ResponseHelper.GenerateResponse(true, "Delete product success", HttpStatus.OK);
+
     }
 }
