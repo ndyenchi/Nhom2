@@ -18,7 +18,6 @@ public class TaiKhoan_NhanVien {
     private  String cmnd;
     private  String email;
     private  Boolean gioiTinh;
-    private String password;
     private String maQuyen;
 
     public TaiKhoan_NhanVien( String sdt, String hoTen, Date ngaySinh, String cmnd, String email, Boolean gioiTinh,String username, Boolean trangThai, String QUYENMaQuyen) {

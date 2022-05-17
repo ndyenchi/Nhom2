@@ -22,4 +22,5 @@ public class TAI_KHOAN_KH {
     @JoinColumn(name="MAKH")
     private KHACH_HANG maKH_taiKhoan;
 
+
 }

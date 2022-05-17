@@ -53,8 +53,14 @@ public class KhachHangService {
         Optional<KhachHangDto> x =  Optional.of(z);
         return x;
     }
-
-    public void deleteById(String s) {
+    public KhachHangDto findById1(String s) {
+        Optional<KHACH_HANG> t = repo.findById(s);
+        KhachHangDto z = new KhachHangDto();
+        z = convertEntityToDto(t.get());
+        Optional<KhachHangDto> x = Optional.of(z);
+        return x.get();
+    }
+        public void deleteById(String s) {
         repo.deleteById(s);
     }
 

@@ -28,9 +28,8 @@ public class TAI_KHOAN_NV {
     @JoinColumn(name="CMND")
     private NHAN_VIEN maNV;
 
-    public TAI_KHOAN_NV(String username,String password, Boolean trangThai) {
+    public TAI_KHOAN_NV(String username, Boolean trangThai) {
         this.username=username;
-        this.password = password;
         this.trangThai = trangThai;
 
     }
