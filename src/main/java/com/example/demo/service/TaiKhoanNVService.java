@@ -2,8 +2,10 @@ package com.example.demo.service;
 
 
 import com.example.demo.DTO.NhanVienDto;
+import com.example.demo.DTO.SanPhamDto;
 import com.example.demo.DTO.TaiKhoanNVDto;
 import com.example.demo.entity.NHAN_VIEN;
+import com.example.demo.entity.SAN_PHAM;
 import com.example.demo.entity.TAI_KHOAN_NV;
 import com.example.demo.repository.TaiKhoanNVRepository;
 import org.modelmapper.ModelMapper;
@@ -62,8 +64,11 @@ public class TaiKhoanNVService {
     public void deleteNhanVien(String id) {
         repo.deleteNhanVien(id);
     }
-
-    public <S extends TAI_KHOAN_NV> S save(S entity) {
-        return repo.save(entity);
+    public void save(TaiKhoanNVDto dto){
+        TAI_KHOAN_NV e =convertDtoToEntity(dto);
+        repo.save(e);
     }
+//    public <S extends TAI_KHOAN_NV> S save(S entity) {
+//        return repo.save(entity);
+//    }
 }

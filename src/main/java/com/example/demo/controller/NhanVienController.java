@@ -31,6 +31,8 @@ public class NhanVienController {
     TaiKhoanNVService taiKhoanNVService;
     @Autowired
     NhanVienRepository repo;
+    @Autowired
+    private static final String password="12345678";
 
     private TaiKhoan_NhanVien tk_nv=new TaiKhoan_NhanVien();
     public static List<NhanVienDto> dsNhanVien;
@@ -79,32 +81,37 @@ public class NhanVienController {
     }
 
     @PostMapping("insert")
-    public ResponseEntity insert (@RequestHeader Map<String, String> headers, @RequestBody TaiKhoan_NhanVien a) {
+    public ResponseEntity insert ( @RequestBody TaiKhoan_NhanVien a) {
+        //@RequestHeader Map<String, String> headers,
 //        nhanVienService.insert(a.getSdt(),a.getHoTen(),a.getNgaySinh(),a.getCmnd(),a.getEmail(),a.getGioiTinh());
 //        taiKhoanNVService.insert(a.getUsername(),a.getPassword(),a.getTrangThai(),a.getMaQuyen(),a.getCmnd());
-            if (!ValidationHeader.IsAdmin(headers)) {
-                return ResponseHelper.GenerateResponse(false, "You are not allow to do this action", HttpStatus.FORBIDDEN);
-            } else {
+//            if (!ValidationHeader.IsAdmin(headers)) {
+//                return ResponseHelper.GenerateResponse(false, "You are not allow to do this action", HttpStatus.FORBIDDEN);
+//            } else {
                 NHAN_VIEN nv = new NHAN_VIEN(a.getSdt(), a.getHoTen(), a.getNgaySinh(), a.getCmnd(), a.getEmail(), a.getGioiTinh());
-                TAI_KHOAN_NV tk = new TAI_KHOAN_NV(a.getUsername(), a.getTrangThai());
+           //     TAI_KHOAN_NV tk = new TAI_KHOAN_NV(a.getUsername(), a.getTrangThai());
+                boolean trangThai=true;
+                TaiKhoanNVDto tk=new TaiKhoanNVDto(a.getUsername(), password ,trangThai, a.getMaQuyen(),a.getCmnd());
                 nhanVienService.save(nv);
                 taiKhoanNVService.save(tk);
                 return ResponseHelper.GenerateResponse(true, "Create employee success", HttpStatus.OK);
 
-            }
+       //     }
         }
 
         @PostMapping("delete/{id}")
-    public ResponseEntity deletNhanVien(@RequestHeader Map<String, String> headers, @PathVariable String id){
-        if (!ValidationHeader.IsAdmin(headers)) {
-            return ResponseHelper.GenerateResponse(false, "You are not allow to do this action", HttpStatus.FORBIDDEN);
-        }
-
-        else{
+    public ResponseEntity deletNhanVien( @PathVariable String id){
+ //           @RequestHeader Map<String, String> headers,
+//        if (!ValidationHeader.IsAdmin(headers)) {
+//            return ResponseHelper.GenerateResponse(false, "You are not allow to do this action", HttpStatus.FORBIDDEN);
+//        }
+//
+//        else{
+//            taiKhoanNVService.deleteNhanVien(id);
+//            return ResponseHelper.GenerateResponse(true, "Delete employee success", HttpStatus.OK);
+//        }
             taiKhoanNVService.deleteNhanVien(id);
-            return ResponseHelper.GenerateResponse(true, "Delete employee success", HttpStatus.OK);
-        }
-
+          return ResponseHelper.GenerateResponse(true, "Delete employee success", HttpStatus.OK);
     }
 
 //    @PatchMapping("{id}")
@@ -128,7 +135,7 @@ public class NhanVienController {
             ReflectionUtils.setField(field, dto, v);
         });
         nhanVienService.save(dto);
-            return ResponseHelper.GenerateResponse(true, "Edit employee success",dsTaiKhoan_NhanVien, HttpStatus.OK);
+            return ResponseHelper.GenerateResponse(true, "Edit employee success", HttpStatus.OK);
 
         }
 }
