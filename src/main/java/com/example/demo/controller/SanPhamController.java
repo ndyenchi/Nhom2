@@ -25,54 +25,58 @@ public class SanPhamController {
     private KhoSPService khoSPService;
 
     private List<KhoSPDto> dsKhoSP;
-    private List<SanPhamDto> dsSanPham;
-    private List<SanPham_khoSP> ds;
+//    private List<SanPhamDto> dsSanPham;
+//    private List<SanPham_khoSP> ds=new ArrayList<>();
 
     @GetMapping()
-    public List<SanPham_khoSP> getAll(){
-        dsSanPham=sanPhamSV.getAll();
-        dsKhoSP=khoSPService.ListAll();
-        ds=new ArrayList<>();
-        for(SanPhamDto a:dsSanPham){
-            for(KhoSPDto b:dsKhoSP){
-                if(b.getMaSPMaSP().equals(a.getMaSP())){
-                    SanPham_khoSP t= new SanPham_khoSP(a.getMaSP(),a.getTenSP(),a.getGioiTinh(),a.getMoTa(),a.getGia(),
-                            a.getThuongHieuMaThuongHieu(),b.getSize(),b.getSoLuongTon(),b.getMau(),b.getHinhAnh(),b.getIdKho() );
-                    ds.add(t);
-                }
-            }
-        }
-        return ds;
+    public  List<KhoSPDto> getAll(){
+        return khoSPService.ListAll();
+    }
+    @GetMapping("id/{id}")
+    public KhoSPDto getByID(@PathVariable int id){
+        return khoSPService.getbyID(id);
+    }
+    @GetMapping("color/{color}")
+    public List<KhoSPDto> getByColor(@PathVariable String color){
+        return khoSPService.findByMau(color);
+    }
+    @GetMapping("size/{size}")
+    public List<KhoSPDto> getbySize(@PathVariable int size){
+        return khoSPService.findBySize(size);
     }
 
-    @GetMapping("{id}")
-    public SanPham_khoSP getByID(@PathVariable Integer id){
-        KhoSPDto b= khoSPService.getbyID(id);
-        SanPhamDto a=sanPhamSV.getbyID(b.getMaSPMaSP());
-        SanPham_khoSP c=new SanPham_khoSP(a.getMaSP(),a.getTenSP(),a.getGioiTinh(),a.getMoTa(),a.getGia(),
-                a.getThuongHieuMaThuongHieu(),b.getSize(),b.getSoLuongTon(),b.getMau(),b.getHinhAnh(),b.getIdKho() );
-
-        return  c;
-
-
-    }
     @PostMapping()
     public ResponseEntity insert (@RequestBody SanPham_khoSP sp){
         SanPhamDto a= new SanPhamDto(sp.getMaSP(),sp.getTenSP(),sp.getGioiTinh(),sp.getMoTa(),sp.getGia(),
                 sp.getMaThuongHieu());
         sanPhamSV.save(a);
-        KhoSPDto b= new KhoSPDto(sp.getSize(),sp.getSoLuongTon(),sp.getMau(),sp.getMaSP(),sp.getHinhAnh(),sp.getIdKho() );
+        KhoSPDto b= new KhoSPDto(sp.getSize(),sp.getSoLuongTon(),sp.getMau(),a,sp.getHinhAnh(),sp.getIdKho() );
         khoSPService.save(b);
         return ResponseHelper.GenerateResponse(true, "Create product success", HttpStatus.OK);
 
     }
-    @DeleteMapping("{id}")
-    public ResponseEntity delete(@PathVariable Integer id){
-        khoSPService.delete(id);
-        KhoSPDto a=khoSPService.getbyID(id);
-        System.out.println(a.getMaSPMaSP());
-        sanPhamSV.delete(a.getMaSPMaSP());
-        return ResponseHelper.GenerateResponse(true, "Delete product success", HttpStatus.OK);
+    @DeleteMapping("{maSP}")
+    public ResponseEntity delete(@PathVariable int maSP){
+          List<KhoSPDto> a=khoSPService.findBySanPham_MaSP(maSP);
+          if (a.size()>0){
+              return ResponseHelper.GenerateResponse(false, "Cant not delete product", HttpStatus.OK);
+
+          }else{
+
+              sanPhamSV.delete(maSP);
+              return ResponseHelper.GenerateResponse(true, "Delete product success", HttpStatus.OK);
+
+          }
+
 
     }
+    @GetMapping("ma-sp/{id}")
+    public List<KhoSPDto> getBymaSP(@PathVariable int id){
+        return khoSPService.findBySanPham_MaSP(id);
+    }
+    @GetMapping("chung")
+    public List<SanPhamDto> getSanPham(){
+        return sanPhamSV.getAll();
+    }
+
 }

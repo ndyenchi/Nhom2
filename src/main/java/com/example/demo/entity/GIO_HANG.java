@@ -22,8 +22,10 @@ public class GIO_HANG {
 
     @ManyToOne
     @JoinColumn(name="ID_KHO")
-    private KHO_SP idKho_GioHang;
+    private KHO_SP idKhoGioHang;
     @ManyToOne
     @JoinColumn(name="MAKH")
-    private KHACH_HANG maKH_GioHang;
+    private KHACH_HANG khachHang;
+
+
 }

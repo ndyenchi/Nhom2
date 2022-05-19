@@ -43,7 +43,7 @@ public class KHACH_HANG {
     @OneToMany(mappedBy = "maKH_hoaDonXuat")
     private Collection<DON_HANG> donHang ;
 
-    @OneToMany(mappedBy = "idKho_GioHang")
+    @OneToMany(mappedBy = "khachHang")
     private Collection<GIO_HANG> gioHang;
 
     public KHACH_HANG(String hoTen, Date ngaySinh, String diaChi, String danhGiatiemNang, String luuY, String email, String maKH) {

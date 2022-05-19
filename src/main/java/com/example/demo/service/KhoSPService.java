@@ -53,6 +53,19 @@ public class KhoSPService {
         return dto;
     }
 
+    public List<KhoSPDto> findByMau(String mau) {
+        return repo.findByMau(mau)
+                .stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
+    }
+    public List<KhoSPDto> findBySize(int size) {
+        return repo.findBySize(size)
+                .stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
+    }
+
     public void delete(Integer id){
         repo.deleteById(id);
     }
@@ -62,11 +75,10 @@ public class KhoSPService {
         repo.save(e);
     }
 
-    public List<KhoSPDto> findByMaSp(Integer maSP){
-        return repo.findByMaSP_MaSP(maSP)
+    public List<KhoSPDto> findBySanPham_MaSP(int maSP) {
+        return repo.findBySanPham_MaSP(maSP)
                 .stream()
                 .map(this::convertEntityToDto)
                 .collect(Collectors.toList());
     }
-
 }

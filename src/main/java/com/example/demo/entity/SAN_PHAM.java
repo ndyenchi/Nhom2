@@ -34,7 +34,7 @@ public class SAN_PHAM {
     @OneToMany(mappedBy = "MA_GIAM")
     private Collection<CHI_TIET_GIAM_GIA> chiTietGiamGia;
 
-    @OneToMany(mappedBy = "maSP")
+    @OneToMany(mappedBy = "sanPham")
     private Collection<KHO_SP> khoSP;
 
 }

@@ -11,5 +11,5 @@ public class GioHangDto{
     private  Integer idGioHang;
     private  Integer soLuong;
     private  KhoSPDto idKho_GioHang;
-    private  KhachHangDto maKH_GioHang;
+    private  String maKH;
 }

@@ -25,7 +25,7 @@ public class KHO_SP {
     @GeneratedValue
     @Column(name="ID_KHO")
     private Integer idKho;
-    @OneToMany(mappedBy = "idKho_GioHang", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "idKhoGioHang", cascade = CascadeType.ALL)
     Collection<GIO_HANG> gioHang;
     @OneToMany(mappedBy = "idKho_HDNhap",cascade = CascadeType.ALL)
     Collection<CT_HOA_DON_NHAP> ctHoaDonNhap;
@@ -35,7 +35,7 @@ public class KHO_SP {
 
     @ManyToOne
     @JoinColumn(name="MASP")
-    private SAN_PHAM maSP;
+    private SAN_PHAM sanPham;
 
     @Column(name = "ANH")
     private String hinhAnh;

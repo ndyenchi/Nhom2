@@ -19,4 +19,6 @@ public class SanPham_khoSP {
     private String mau;
     private String hinhAnh;
     private Integer IdKho;
+
+
 }

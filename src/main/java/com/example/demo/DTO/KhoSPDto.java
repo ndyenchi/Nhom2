@@ -14,7 +14,15 @@ public class KhoSPDto {
     private Integer size;
     private long soLuongTon;
     private String mau;
-    private Integer maSPMaSP;
+    private SanPhamDto sanPham;
     private String hinhAnh;
     private Integer idKho;
+
+    public KhoSPDto(Integer size, long soLuongTon, String mau, String hinhAnh, Integer idKho) {
+        this.size = size;
+        this.soLuongTon = soLuongTon;
+        this.mau = mau;
+        this.hinhAnh = hinhAnh;
+        this.idKho = idKho;
+    }
 }
