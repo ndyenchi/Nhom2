@@ -43,6 +43,10 @@ public class TaiKhoanNVService {
         return user;
     }
 
+    public TaiKhoanNVDto findById(String s) {
+        Optional<TAI_KHOAN_NV> en=repo.findById(s);
+        return convertEntityToDto(en.get());
+    }
 
     public List<TaiKhoanNVDto> ListAll() {
         return repo.findAll()
@@ -56,11 +60,11 @@ public class TaiKhoanNVService {
 
 
 
-    public void insert(String f, String g, Boolean h, String i, String k) {
-        TaiKhoanNVDto dto=new TaiKhoanNVDto(f,g,h,i,k);
-        TAI_KHOAN_NV e= convertDtoToEntity(dto);
-        repo.insert(e.getUsername(),e.getPassword(),e.getTrangThai(),e.getQUYEN().getMaQuyen(),e.getMaNV().getCmnd());
-    }
+//    public void insert(String f, String g, Boolean h, String i, String k) {
+//        TaiKhoanNVDto dto=new TaiKhoanNVDto(f,g,h,i,k);
+//        TAI_KHOAN_NV e= convertDtoToEntity(dto);
+//        repo.insert(e.getUsername(),e.getPassword(),e.getTrangThai(),e.getQUYEN().getMaQuyen(),e.getMaNV().getCmnd());
+//    }
     public void deleteNhanVien(String id) {
         repo.deleteNhanVien(id);
     }

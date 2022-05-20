@@ -16,6 +16,7 @@ public class NhanVienDto {
     private  String cmnd;
     private  String email;
     private  Boolean gioiTinh;
+
     public  NhanVienDto(String sdt,String hoTen, Date ngaySinh,String email, Boolean gioiTinh){
         this.gioiTinh=gioiTinh;
         this.email=email;

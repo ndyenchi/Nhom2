@@ -13,5 +13,5 @@ public class TaiKhoanNVDto {
     private  String password;
     private  Boolean trangThai;
     private  String QUYENMaQuyen;
-    private  String maNVCmnd;
+    private  NhanVienDto maNV;
 }

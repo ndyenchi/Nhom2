@@ -40,102 +40,149 @@ public class NhanVienController {
 
     public static List<TaiKhoan_NhanVien> dsTaiKhoan_NhanVien;
 
-
     @GetMapping("getAll")
-    public List<TaiKhoan_NhanVien> listal() {
-        dsNhanVien=nhanVienService.listALL();
-        dsTaiKhoan=taiKhoanNVService.ListAll();
-        dsTaiKhoan_NhanVien=new ArrayList<>();
-      for(NhanVienDto nv:dsNhanVien){
-          System.out.println("nhan vien "+nv.getCmnd());
-          for(TaiKhoanNVDto tk:dsTaiKhoan){
-              System.out.println("taikhoan :"+tk.getUsername());
-              if(tk.getMaNVCmnd().equals(nv.getCmnd())){
-                  TaiKhoan_NhanVien t= new TaiKhoan_NhanVien(nv.getSdt(),nv.getHoTen(), nv.getNgaySinh(),nv.getCmnd(),
-                          nv.getEmail(), nv.getGioiTinh(),tk.getUsername(),tk.getTrangThai(), tk.getQUYENMaQuyen());
-                  dsTaiKhoan_NhanVien.add(t);
-              }
-          }
-      }
-      return dsTaiKhoan_NhanVien;
+    public List<TaiKhoanNVDto> listal() {
+        return taiKhoanNVService.ListAll();
     }
-
 
     @GetMapping("{cmnd}")
-    public TaiKhoan_NhanVien getByID(@PathVariable String cmnd) {
-        dsNhanVien=nhanVienService.listALL();
-        dsTaiKhoan=taiKhoanNVService.ListAll();
-     //   dsTaiKhoan_NhanVien=new ArrayList<>();
-        for(NhanVienDto nv:dsNhanVien){
-            for(TaiKhoanNVDto tk:dsTaiKhoan){
-                if(tk.getMaNVCmnd().equals(nv.getCmnd()) && tk.getMaNVCmnd().equals(cmnd)){
-                    TaiKhoan_NhanVien t= new TaiKhoan_NhanVien(nv.getSdt(),nv.getHoTen(), nv.getNgaySinh(),nv.getCmnd(),
-                            nv.getEmail(), nv.getGioiTinh(),tk.getUsername(),tk.getTrangThai(), tk.getQUYENMaQuyen());
-                 //   dsTaiKhoan_NhanVien.add(t);
-                    tk_nv=t;
-                }
-            }
-        }
-            return  tk_nv;
-    //    return dsTaiKhoan_NhanVien;
+    public TaiKhoanNVDto getByID(@PathVariable String cmnd) {
+        return taiKhoanNVService.findById(cmnd);
     }
-
     @PostMapping("insert")
-    public ResponseEntity insert ( @RequestBody TaiKhoan_NhanVien a) {
-        //@RequestHeader Map<String, String> headers,
-//        nhanVienService.insert(a.getSdt(),a.getHoTen(),a.getNgaySinh(),a.getCmnd(),a.getEmail(),a.getGioiTinh());
-//        taiKhoanNVService.insert(a.getUsername(),a.getPassword(),a.getTrangThai(),a.getMaQuyen(),a.getCmnd());
-//            if (!ValidationHeader.IsAdmin(headers)) {
-//                return ResponseHelper.GenerateResponse(false, "You are not allow to do this action", HttpStatus.FORBIDDEN);
-//            } else {
-                NHAN_VIEN nv = new NHAN_VIEN(a.getSdt(), a.getHoTen(), a.getNgaySinh(), a.getCmnd(), a.getEmail(), a.getGioiTinh());
-           //     TAI_KHOAN_NV tk = new TAI_KHOAN_NV(a.getUsername(), a.getTrangThai());
-                boolean trangThai=true;
-                TaiKhoanNVDto tk=new TaiKhoanNVDto(a.getUsername(), password ,trangThai, a.getMaQuyen(),a.getCmnd());
-                nhanVienService.save(nv);
-                taiKhoanNVService.save(tk);
-                return ResponseHelper.GenerateResponse(true, "Create employee success", HttpStatus.OK);
-
-       //     }
-        }
-
-        @PostMapping("delete/{id}")
-    public ResponseEntity deletNhanVien( @PathVariable String id){
-    //        @RequestHeader Map<String, String> headers,
-//        if (!ValidationHeader.IsAdmin(headers)) {
-//            return ResponseHelper.GenerateResponse(false, "You are not allow to do this action", HttpStatus.FORBIDDEN);
-//        }
-//
-//        else{
-//            taiKhoanNVService.deleteNhanVien(id);
-//            return ResponseHelper.GenerateResponse(true, "Delete employee success", HttpStatus.OK);
-//        }
-            taiKhoanNVService.deleteNhanVien(id);
-          return ResponseHelper.GenerateResponse(true, "Delete employee success", HttpStatus.OK);
+       public ResponseEntity insert ( @RequestBody TaiKhoanNVDto a) {
+        a.setTrangThai(true);
+        a.setPassword("12345678");
+        NhanVienDto nv=new NhanVienDto(a.getMaNV().getSdt(),a.getMaNV().getHoTen(), a.getMaNV().getNgaySinh(),a.getMaNV().getCmnd(), a.getMaNV().getEmail(), a.getMaNV().getGioiTinh());
+        nhanVienService.save(nv);
+        taiKhoanNVService.save(a);
+        return ResponseHelper.GenerateResponse(true, "Create employee success", HttpStatus.OK);
     }
-
-//    @PatchMapping("{id}")
-//    public ResponseEntity edit(@PathVariable String id, @RequestBody TaiKhoan_NhanVien a){
-//        NHAN_VIEN nv = new NHAN_VIEN(a.getSdt(), a.getHoTen(), a.getNgaySinh(),id, a.getEmail(), a.getGioiTinh());
-//        TAI_KHOAN_NV tk = new TAI_KHOAN_NV(a.getUsername(), a.getTrangThai());
-//        nhanVienService.save(nv);
-//        taiKhoanNVService.save(tk);
-//        return ResponseHelper.GenerateResponse(true, "Edit employee success",dsTaiKhoan_NhanVien, HttpStatus.OK);
-//
-//    }
-
-    @PatchMapping("{id}")
-        public ResponseEntity edit(@PathVariable String id ,@RequestBody Map<String, Object> fields){
-
-
-        NhanVienDto dto=nhanVienService.findById(id);
+    @PostMapping("delete/{id}")
+    public ResponseEntity deletNhanVien( @PathVariable String id){
+        taiKhoanNVService.deleteNhanVien(id);
+        return ResponseHelper.GenerateResponse(true, "Delete employee success", HttpStatus.OK);
+    }
+    @PatchMapping("tai-khoan/{id}")
+   public ResponseEntity edit(@PathVariable String id ,@RequestBody Map<String, Object> fields){
+        TaiKhoanNVDto dto=taiKhoanNVService.findById(id);
         fields.forEach((k, v) -> {
-            Field field = ReflectionUtils.findField(NhanVienDto.class, k);
+            Field field = ReflectionUtils.findField(TaiKhoanNVDto.class, k);
             field.setAccessible(true);
             ReflectionUtils.setField(field, dto, v);
         });
-        nhanVienService.save(dto);
+        taiKhoanNVService.save(dto);
             return ResponseHelper.GenerateResponse(true, "Edit employee success", HttpStatus.OK);
 
         }
+    @PatchMapping("{id}")
+    public ResponseEntity editnhanVien(@PathVariable String id ,@RequestBody Map<String, Object> fields){
+        TaiKhoanNVDto dto=taiKhoanNVService.findById(id);
+        NhanVienDto nv=nhanVienService.findById(dto.getMaNV().getCmnd());
+        fields.forEach((k, v) -> {
+            Field field = ReflectionUtils.findField(NhanVienDto.class, k);
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, nv, v);
+        });
+        nhanVienService.save(nv);
+        return ResponseHelper.GenerateResponse(true, "Edit employee success", HttpStatus.OK);
+
+    }
+//    @GetMapping("getAll")
+//    public List<TaiKhoan_NhanVien> listal() {
+//        dsNhanVien=nhanVienService.listALL();
+//        dsTaiKhoan=taiKhoanNVService.ListAll();
+//        dsTaiKhoan_NhanVien=new ArrayList<>();
+//      for(NhanVienDto nv:dsNhanVien){
+//          System.out.println("nhan vien "+nv.getCmnd());
+//          for(TaiKhoanNVDto tk:dsTaiKhoan){
+//              System.out.println("taikhoan :"+tk.getUsername());
+//              if(tk.getMaNVCmnd().equals(nv.getCmnd())){
+//                  TaiKhoan_NhanVien t= new TaiKhoan_NhanVien(nv.getSdt(),nv.getHoTen(), nv.getNgaySinh(),nv.getCmnd(),
+//                          nv.getEmail(), nv.getGioiTinh(),tk.getUsername(),tk.getTrangThai(), tk.getQUYENMaQuyen());
+//                  dsTaiKhoan_NhanVien.add(t);
+//              }
+//          }
+//      }
+//      return dsTaiKhoan_NhanVien;
+//    }
+//
+//
+//    @GetMapping("{cmnd}")
+//    public TaiKhoan_NhanVien getByID(@PathVariable String cmnd) {
+//        dsNhanVien=nhanVienService.listALL();
+//        dsTaiKhoan=taiKhoanNVService.ListAll();
+//     //   dsTaiKhoan_NhanVien=new ArrayList<>();
+//        for(NhanVienDto nv:dsNhanVien){
+//            for(TaiKhoanNVDto tk:dsTaiKhoan){
+//                if(tk.getMaNVCmnd().equals(nv.getCmnd()) && tk.getMaNVCmnd().equals(cmnd)){
+//                    TaiKhoan_NhanVien t= new TaiKhoan_NhanVien(nv.getSdt(),nv.getHoTen(), nv.getNgaySinh(),nv.getCmnd(),
+//                            nv.getEmail(), nv.getGioiTinh(),tk.getUsername(),tk.getTrangThai(), tk.getQUYENMaQuyen());
+//                 //   dsTaiKhoan_NhanVien.add(t);
+//                    tk_nv=t;
+//                }
+//            }
+//        }
+//            return  tk_nv;
+//    //    return dsTaiKhoan_NhanVien;
+//    }
+//
+//    @PostMapping("insert")
+//    public ResponseEntity insert ( @RequestBody TaiKhoan_NhanVien a) {
+//        //@RequestHeader Map<String, String> headers,
+////        nhanVienService.insert(a.getSdt(),a.getHoTen(),a.getNgaySinh(),a.getCmnd(),a.getEmail(),a.getGioiTinh());
+////        taiKhoanNVService.insert(a.getUsername(),a.getPassword(),a.getTrangThai(),a.getMaQuyen(),a.getCmnd());
+////            if (!ValidationHeader.IsAdmin(headers)) {
+////                return ResponseHelper.GenerateResponse(false, "You are not allow to do this action", HttpStatus.FORBIDDEN);
+////            } else {
+//                NHAN_VIEN nv = new NHAN_VIEN(a.getSdt(), a.getHoTen(), a.getNgaySinh(), a.getCmnd(), a.getEmail(), a.getGioiTinh());
+//           //     TAI_KHOAN_NV tk = new TAI_KHOAN_NV(a.getUsername(), a.getTrangThai());
+//                boolean trangThai=true;
+//                TaiKhoanNVDto tk=new TaiKhoanNVDto(a.getUsername(), password ,trangThai, a.getMaQuyen(),a.getCmnd());
+//                nhanVienService.save(nv);
+//                taiKhoanNVService.save(tk);
+//                return ResponseHelper.GenerateResponse(true, "Create employee success", HttpStatus.OK);
+//
+//       //     }
+//        }
+//
+//        @PostMapping("delete/{id}")
+//    public ResponseEntity deletNhanVien( @PathVariable String id){
+//    //        @RequestHeader Map<String, String> headers,
+////        if (!ValidationHeader.IsAdmin(headers)) {
+////            return ResponseHelper.GenerateResponse(false, "You are not allow to do this action", HttpStatus.FORBIDDEN);
+////        }
+////
+////        else{
+////            taiKhoanNVService.deleteNhanVien(id);
+////            return ResponseHelper.GenerateResponse(true, "Delete employee success", HttpStatus.OK);
+////        }
+//            taiKhoanNVService.deleteNhanVien(id);
+//          return ResponseHelper.GenerateResponse(true, "Delete employee success", HttpStatus.OK);
+//    }
+//
+////    @PatchMapping("{id}")
+////    public ResponseEntity edit(@PathVariable String id, @RequestBody TaiKhoan_NhanVien a){
+////        NHAN_VIEN nv = new NHAN_VIEN(a.getSdt(), a.getHoTen(), a.getNgaySinh(),id, a.getEmail(), a.getGioiTinh());
+////        TAI_KHOAN_NV tk = new TAI_KHOAN_NV(a.getUsername(), a.getTrangThai());
+////        nhanVienService.save(nv);
+////        taiKhoanNVService.save(tk);
+////        return ResponseHelper.GenerateResponse(true, "Edit employee success",dsTaiKhoan_NhanVien, HttpStatus.OK);
+////
+////    }
+//
+//    @PatchMapping("{id}")
+//        public ResponseEntity edit(@PathVariable String id ,@RequestBody Map<String, Object> fields){
+//
+//
+//        NhanVienDto dto=nhanVienService.findById(id);
+//        fields.forEach((k, v) -> {
+//            Field field = ReflectionUtils.findField(NhanVienDto.class, k);
+//            field.setAccessible(true);
+//            ReflectionUtils.setField(field, dto, v);
+//        });
+//        nhanVienService.save(dto);
+//            return ResponseHelper.GenerateResponse(true, "Edit employee success", HttpStatus.OK);
+//
+//        }
 }
