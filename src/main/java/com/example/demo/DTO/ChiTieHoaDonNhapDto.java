@@ -9,8 +9,9 @@ import lombok.*;
 @AllArgsConstructor
 public class ChiTieHoaDonNhapDto  {
     private  Integer idHoaDonNhap;
-    private  HoaDonNhapDto maHoaDonNhap;
+    private  HoaDonNhapDto hoaDon;
     private  Integer soLuongNhap;
     private  KhoSPDto idKho_HDNhap;
     private  float gia_Nhap;
+
 }

@@ -24,4 +24,8 @@ public class HOA_DON_NHAP {
     private Date ngayNhap;
     @Column(name="TONG_TIEN")
     private Long tongTien;
+
+    @OneToMany(mappedBy = "hoaDon")
+    private Collection<CT_HOA_DON_NHAP> ctHoaDonNhapCollection;
+
 }

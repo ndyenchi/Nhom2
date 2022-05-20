@@ -10,7 +10,10 @@ public class ResponseHelper {
         return new ResponseEntity<Object>(new ApiResponse<Object>(success, message),status);
     }
 
-	public static ResponseEntity<Object> GenerateResponse(Boolean success, String message, Object data, HttpStatus status) {
-        return new ResponseEntity<Object>(new ApiResponse<Object>(success, message, data),status);
+//	public static ResponseEntity<Object> GenerateResponse(Boolean success, String message, Object data, HttpStatus status) {
+//        return new ResponseEntity<Object>(new ApiResponse<Object>(success, message, data),status);
+//    }
+    public static ResponseEntity<Object> GenerateResponse(Boolean success, String message, String role, Object data, HttpStatus status) {
+        return new ResponseEntity<Object>(new ApiResponse<Object>(success, message, role, data), status);
     }
 }

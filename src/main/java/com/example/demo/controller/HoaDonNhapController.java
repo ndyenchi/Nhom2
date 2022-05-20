@@ -1,35 +1,48 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.DTO.ChiTieHoaDonNhapDto;
 import com.example.demo.entity.HOA_DON_NHAP;
+import com.example.demo.helper.ResponseHelper;
 import com.example.demo.service.CHI_TIET_HOA_DON_NHAP_SERVICE;
 import com.example.demo.service.HoaDonNhapService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/HoaDonNhap/")
+@RequestMapping("/api/hoa-don-nhap/")
 public class HoaDonNhapController {
     @Autowired
-    private HoaDonNhapService HoaDonNhapSV;
+    private HoaDonNhapService hoaDonNhapService;
     @Autowired
-    private CHI_TIET_HOA_DON_NHAP_SERVICE ChiTietHoaDonNhapSV;
+    private CHI_TIET_HOA_DON_NHAP_SERVICE ctHoaDonNhapService;
 
-    @GetMapping("get")
-    public List<HOA_DON_NHAP> getHoaDonNha() {
-        List<HOA_DON_NHAP> HoaDonNhapList = HoaDonNhapSV.ListAll();
-        return HoaDonNhapList;
+    // ds hóa hơn nhập
+    @GetMapping()
+    public List<ChiTieHoaDonNhapDto> list(){
+        return ctHoaDonNhapService.ListAll();
+    }
+    @GetMapping("{id}")
+    public ChiTieHoaDonNhapDto findByID(@PathVariable int id){
+        return  ctHoaDonNhapService.get(id);
+    }
+    @PostMapping("")
+    public ResponseEntity<Object> create(@RequestBody ChiTieHoaDonNhapDto dto){
+        hoaDonNhapService.save(dto.getHoaDon());
+        ctHoaDonNhapService.save(dto);
+        return ResponseHelper.GenerateResponse(true, "Create bill success", HttpStatus.OK);
+    }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> delete(@PathVariable int id){
+
+        ctHoaDonNhapService.delete(id);
+        hoaDonNhapService.delete(ctHoaDonNhapService.get(id).getIdHoaDonNhap());
+        return ResponseHelper.GenerateResponse(true, "Create employee success", HttpStatus.OK);
     }
 
-    @PostMapping("post")
-    public List<HOA_DON_NHAP> postHoaDonNhap(@RequestBody HOA_DON_NHAP HoaDonNhap) {
-        List<HOA_DON_NHAP> HoaDonNhapList = HoaDonNhapSV.ListAll();
 
-        HoaDonNhapList.add(HoaDonNhap);
-        HoaDonNhapSV.save(HoaDonNhap);
-        // Trả về trang thành công success.html
-        return HoaDonNhapList;
-    }
 }

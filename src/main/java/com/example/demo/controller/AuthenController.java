@@ -1,31 +1,32 @@
-package com.example.demo.controller;
 
-import com.example.demo.DTO.*;
-import com.example.demo.entity.KHACH_HANG;
-import com.example.demo.entity.TAI_KHOAN_KH;
-import com.example.demo.entity.TAI_KHOAN_NV;
-import com.example.demo.helper.JwtTokenProvider;
-import com.example.demo.helper.ResponseHelper;
-import com.example.demo.repository.TaiKhoanKHRepository;
-import com.example.demo.service.KhachHangService;
-import com.example.demo.service.TaiKhoanKHService;
-import com.example.demo.service.TaiKhoanNVService;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+        package com.example.demo.controller;
+
+        import com.example.demo.DTO.*;
+        import com.example.demo.entity.KHACH_HANG;
+        import com.example.demo.entity.TAI_KHOAN_KH;
+        import com.example.demo.entity.TAI_KHOAN_NV;
+        import com.example.demo.helper.JwtTokenProvider;
+        import com.example.demo.helper.ResponseHelper;
+        import com.example.demo.repository.TaiKhoanKHRepository;
+        import com.example.demo.service.KhachHangService;
+        import com.example.demo.service.TaiKhoanKHService;
+        import com.example.demo.service.TaiKhoanNVService;
+        import org.modelmapper.ModelMapper;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.http.HttpStatus;
+        import org.springframework.http.ResponseEntity;
+        import org.springframework.web.bind.annotation.*;
 
 
-import javax.validation.Valid;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Random;
+        import javax.validation.Valid;
+        import java.text.DateFormat;
+        import java.text.SimpleDateFormat;
+        import java.util.ArrayList;
+        import java.util.Random;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+        import java.util.Date;
+        import java.util.HashMap;
+        import java.util.List;
 
 
 @RestController
@@ -74,6 +75,7 @@ public class AuthenController {
 
 
 
+
     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     Date DoB = new Date();
 
@@ -85,20 +87,37 @@ public class AuthenController {
 
         TaiKhoanKHDto KHData = new TaiKhoanKHDto();
         String username = loginRequest.getUsername();
-        for(int i= 0; i < listUser().size(); i++ ) {
-            System.out.println("STT." + i + " " + username + " " + listUser().get(i).getUsername());
-            for (int j = 0; j < listNV().size(); j++) {
-                if (username.compareTo(listUser().get(i).getUsername()) == 0 || username.compareTo(listNV().get(j).getUsername()) == 0) {
-                    KHData = listUser().get(i);
-                }
+//        for(int i= 0; i < listUser().size(); i++ ) {
+//            System.out.println("STT." + i + " " + username + " " + listUser().get(i).getUsername());
+//            if (username.compareTo(listUser().get(i).getUsername()) == 0) {
+//                KHData = listUser().get(i);
+//            }
+//        }
+        for(TaiKhoanKHDto t: listUser()){
+            if(t.getMaKH_taiKhoan().getEmail().equals(username)){
+                KHData=t;
             }
         }
         System.out.println(KHData);
 
+        TaiKhoanNVDto NVData = new TaiKhoanNVDto();
+//        for(int j= 0; j < listNV().size(); j++ ) {
+//            System.out.println("STT." + j + " " + username + " " + listNV().get(j).getUsername());
+//            if (username.compareTo(listNV().get(j).getUsername()) == 0) {
+//                NVData = listNV().get(j);
+//            }
+//        }
+        for(TaiKhoanNVDto t: listNV()){
+            if(t.getMaNV().getEmail().equals(username)){
+                NVData=t;
+            }
+        }
+        System.out.println(NVData);
+
 
 
         try {
-            if(KHData == null){
+            if(KHData.getUsername() == null && NVData.getUsername() == null){
                 return ResponseHelper.GenerateResponse(false, "user doesn't exist", HttpStatus.BAD_REQUEST);
             }
 //            Boolean isCorrectPassword = BCrypt.checkpw(loginRequest.getPassword(), KHData.getPassword());
@@ -106,21 +125,46 @@ public class AuthenController {
 //                return ResponseHelper.GenerateResponse(false, "user or passsword isn't correct", HttpStatus.BAD_REQUEST);
 //            }
 
-            if(loginRequest.getPassword().equals(KHData.getPassword())) {
+            if(NVData.getUsername() == null){
+                if(loginRequest.getPassword().equals(KHData.getPassword())) {
 
-                HashMap<String, String> claims = new HashMap<String, String>();
-                claims.put("username", KHData.getUsername());
-                claims.put("password", KHData.getPassword());
 
-                String jwtToken = JwtTokenProvider.GenerateToken(claims);
+                    HashMap<String, String> claims = new HashMap<String, String>();
+                    claims.put("username", KHData.getUsername());
+                    claims.put("password", KHData.getPassword());
 
-                LoginResponse response = new LoginResponse();
-                response.setToken(jwtToken);
+                    String jwtToken = JwtTokenProvider.GenerateToken(claims);
 
-                return ResponseHelper.GenerateResponse(true, "login success", response, HttpStatus.OK);
+                    LoginResponse response = new LoginResponse();
+                    response.setToken(jwtToken);
+
+                    return ResponseHelper.GenerateResponse(true, "login success","Khach hang", response, HttpStatus.OK);
+                }
+                return ResponseHelper.GenerateResponse(false, "user or passsword isn't correct", HttpStatus.BAD_REQUEST);
+            }else{
+                if(loginRequest.getPassword().equals(NVData.getPassword())) {
+
+                    String role;
+                    if(NVData.getQUYENMaQuyen().equals("1") ){
+                        role = "Quan ly";
+                    }
+                    else {
+                        role = "Nhan vien";
+                    }
+
+                    HashMap<String, String> claims = new HashMap<String, String>();
+                    claims.put("username", NVData.getUsername());
+                    claims.put("password", NVData.getPassword());
+
+                    String jwtToken = JwtTokenProvider.GenerateToken(claims);
+
+                    LoginResponse response = new LoginResponse();
+                    response.setToken(jwtToken);
+
+                    return ResponseHelper.GenerateResponse(true, "login success", role, response, HttpStatus.OK);
+                }
+                return ResponseHelper.GenerateResponse(false, "user or passsword isn't correct", HttpStatus.BAD_REQUEST);
             }
-            return ResponseHelper.GenerateResponse(false, "user or passsword isn't correct", HttpStatus.BAD_REQUEST);
-
         }catch (Exception ex){
             System.out.println(ex.getMessage());
             return ResponseHelper.GenerateResponse(false, "There are some internal error: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -134,13 +178,12 @@ public class AuthenController {
     public ResponseEntity<Object> Register(@Valid @RequestBody RegisterUserRequest request) {
 
         TaiKhoanKHDto Data = new TaiKhoanKHDto();
-        String username = request.getUsername();
+        String username = request.getEmail();
         for(int i= 0; i < listUser().size(); i++ ){
             if(username.compareTo(listUser().get(i).getUsername()) == 0 ){
                 Data = listUser().get(i);
             }
         }
-
 
         try {
             if (Data.getUsername() == null) {
@@ -158,13 +201,13 @@ public class AuthenController {
 
 //                tkKH_new.setUsername(request.getUsername());
 //                tkKH_new.setPassword(request.getPassword());
-                taiKhoanKHService.insert(request.getUsername(), request.getPassword(), maKH);
+                taiKhoanKHService.insert(request.getEmail(), request.getPassword(), maKH);
 
                 return ResponseHelper.GenerateResponse(true, "register user successfully", HttpStatus.OK);
 
             }
 
-            return ResponseHelper.GenerateResponse(false, "user exists", HttpStatus.BAD_REQUEST);
+            return ResponseHelper.GenerateResponse(false, "email exists", HttpStatus.BAD_REQUEST);
 
 
         } catch (Exception ex) {

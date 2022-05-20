@@ -36,7 +36,7 @@ public class TaiKhoanKHService {
     }
 
     public List<TAI_KHOAN_KH> ListAll(){
-        return (List<TAI_KHOAN_KH>) repo.findAll();
+        return  repo.findAll();
     }
 
     public Optional<TAI_KHOAN_KH> get(String id){

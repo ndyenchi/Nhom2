@@ -68,7 +68,7 @@ public class GioHangService {
         return convertEntityToDto(e);
     }
 
-    public void delete(GIO_HANG entity) {
-        repo.delete(entity);
+    public void delete(GioHangDto dto) {
+        repo.delete(convertDtoToEntity(dto));
     }
 }

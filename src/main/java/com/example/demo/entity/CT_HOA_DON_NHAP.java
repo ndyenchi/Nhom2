@@ -19,7 +19,7 @@ public class CT_HOA_DON_NHAP {
     private Integer idHoaDonNhap;
     @ManyToOne
     @JoinColumn(name="MAHD_NHAP")
-    private HOA_DON_NHAP maHoaDonNhap;
+    private HOA_DON_NHAP hoaDon;
     @Column(name="SO_LUONG_NHAP")
     private Integer soLuongNhap;
     @ManyToOne

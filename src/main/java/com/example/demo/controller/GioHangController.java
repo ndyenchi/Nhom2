@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/gio-hang/")
@@ -43,12 +44,28 @@ public class GioHangController {
     }
     @DeleteMapping("{maKH}/{idSanPham}")
     public ResponseEntity delete(@PathVariable String maKH, @PathVariable int idSanPham){
-        gioHangService.getByMaKH_IdSanPham(maKH,idSanPham);
-
+        List<GioHangDto> list= gioHangService.ListAll();
+        GioHangDto a=new GioHangDto();
+        for(GioHangDto dto: list){
+            if (dto.getIdKho_GioHang().getIdKho() == idSanPham && dto.getMaKH().equals(maKH)){
+                a=dto;
+                break;
+            }
+        }
+        gioHangService.delete(a);
         return ResponseHelper.GenerateResponse(true, "Delete item to cart success", HttpStatus.OK);
     }
     @GetMapping("{maKH}/{idSanPham}")
     public GioHangDto test(@PathVariable String maKH, @PathVariable Integer idSanPham){
-        return gioHangService.getByMaKH_IdSanPham(maKH,idSanPham);
+
+        List<GioHangDto> list= gioHangService.ListAll();
+        GioHangDto a=new GioHangDto();
+        for(GioHangDto dto: list){
+            if (dto.getIdKho_GioHang().getIdKho() == idSanPham && dto.getMaKH().equals(maKH)){
+                a=dto;
+                break;
+            }
+        }
+        return a;
     }
 }

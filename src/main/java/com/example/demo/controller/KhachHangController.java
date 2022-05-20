@@ -62,7 +62,7 @@ public class KhachHangController {
     @PostMapping("insert")
     public ResponseEntity insert (@RequestBody KhachHang_TaiKhoan a){
         KhachHangDto kh=new KhachHangDto(a.getHoTen(),a.getNgaySinh(),a.getDiaChi(),a.getDanhGiatiemNang(),a.getLuuY(),a.getEmail(),a.getMaKH());
-        TaiKhoanKHDto tk=new TaiKhoanKHDto(a.getUsername(), password,a.getMaKH());
+        TaiKhoanKHDto tk=new TaiKhoanKHDto(a.getUsername(), password,kh);
         khachHangService.save(kh);
         taiKhoanKHService.save(tk);
         return ResponseHelper.GenerateResponse(true, "Create employee success",HttpStatus.OK);

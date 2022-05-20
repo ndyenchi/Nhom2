@@ -10,7 +10,7 @@ import lombok.*;
 public class TaiKhoanKHDto  {
     private  String username;
     private  String password;
-    private  String maKH_taiKhoanMaKH;
+    private  KhachHangDto maKH_taiKhoan;
 
 
 }
