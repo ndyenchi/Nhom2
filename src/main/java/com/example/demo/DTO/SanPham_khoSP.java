@@ -17,7 +17,8 @@ public class SanPham_khoSP {
     private Integer size;
     private long soLuongTon;
     private String mau;
-    private String hinhAnh;
+    private String anh;
+    private String[] hinhAnh;
     private Integer IdKho;
 
 

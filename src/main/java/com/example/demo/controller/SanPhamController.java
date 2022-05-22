@@ -48,16 +48,16 @@ public class SanPhamController {
         return khoSPService.findBySize(size);
     }
 
-    @PostMapping()
-    public ResponseEntity insert (@RequestBody SanPham_khoSP sp){
-        SanPhamDto a= new SanPhamDto(sp.getMaSP(),sp.getTenSP(),sp.getGioiTinh(),sp.getMoTa(),sp.getGia(),
-                sp.getMaThuongHieu());
-        sanPhamSV.save(a);
-        KhoSPDto b= new KhoSPDto(sp.getSize(),sp.getSoLuongTon(),sp.getMau(),a,sp.getHinhAnh(),sp.getIdKho() );
-        khoSPService.save(b);
-        return ResponseHelper.GenerateResponse(true, "Create product success", HttpStatus.OK);
-
-    }
+//    @PostMapping()
+//    public ResponseEntity insert (@RequestBody SanPham_khoSP sp){
+//        SanPhamDto a= new SanPhamDto(sp.getMaSP(),sp.getTenSP(),sp.getGioiTinh(),sp.getMoTa(),sp.getGia(),
+//                sp.getMaThuongHieu());
+//        sanPhamSV.save(a);
+//        KhoSPDto b= new KhoSPDto(sp.getSize(),sp.getSoLuongTon(),sp.getMau(),a,sp.getHinhAnh(),sp.getIdKho() );
+//        khoSPService.save(b);
+//        return ResponseHelper.GenerateResponse(true, "Create product success", HttpStatus.OK);
+//
+//    }
     @DeleteMapping("{maSP}")
     public ResponseEntity delete(@PathVariable int maSP){
         List<KhoSPDto> a=khoSPService.findBySanPham_MaSP(maSP);
@@ -81,5 +81,8 @@ public class SanPhamController {
     public List<SanPhamDto> getSanPham(){
         return sanPhamSV.getAll();
     }
-
+    @GetMapping("/default")
+    private List<SanPhamDto> listSanPham(){
+        return  sanPhamSV.getAll();
+    }
 }

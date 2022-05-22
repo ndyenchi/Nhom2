@@ -39,4 +39,6 @@ public class KHO_SP {
 
     @Column(name = "ANH")
     private String hinhAnh;
+  //  private String[] hinhAnh={"","","",""};
+
 }

@@ -15,10 +15,12 @@ public class KhoSPDto {
     private long soLuongTon;
     private String mau;
     private SanPhamDto sanPham;
-    private String hinhAnh;
+  //  private String hinhAnh;
+    private String[] hinhAnh={"","","",""};
     private Integer idKho;
 
-    public KhoSPDto(Integer size, long soLuongTon, String mau, String hinhAnh, Integer idKho) {
+
+    public KhoSPDto(Integer size, long soLuongTon, String mau, String[] hinhAnh, Integer idKho) {
         this.size = size;
         this.soLuongTon = soLuongTon;
         this.mau = mau;

@@ -37,4 +37,6 @@ public class SAN_PHAM {
     @OneToMany(mappedBy = "sanPham")
     private Collection<KHO_SP> khoSP;
 
+    @Column(name="HINH_ANH")
+    private String anh;
 }
