@@ -25,8 +25,11 @@ public class SanPhamController {
     private KhoSPService khoSPService;
 
     private List<KhoSPDto> dsKhoSP;
-//    private List<SanPhamDto> dsSanPham;
-//    private List<SanPham_khoSP> ds=new ArrayList<>();
+
+    private static List<SanPhamDto> dsSanPham;
+
+    private static List<SanPham_khoSP> dsSp_khoSP=new ArrayList<>();
+
 
     @GetMapping()
     public  List<KhoSPDto> getAll(){
@@ -57,16 +60,16 @@ public class SanPhamController {
     }
     @DeleteMapping("{maSP}")
     public ResponseEntity delete(@PathVariable int maSP){
-          List<KhoSPDto> a=khoSPService.findBySanPham_MaSP(maSP);
-          if (a.size()>0){
-              return ResponseHelper.GenerateResponse(false, "Cant not delete product", HttpStatus.OK);
+        List<KhoSPDto> a=khoSPService.findBySanPham_MaSP(maSP);
+        if (a.size()>0){
+            return ResponseHelper.GenerateResponse(false, "Cant not delete product", HttpStatus.OK);
 
-          }else{
+        }else{
 
-              sanPhamSV.delete(maSP);
-              return ResponseHelper.GenerateResponse(true, "Delete product success", HttpStatus.OK);
+            sanPhamSV.delete(maSP);
+            return ResponseHelper.GenerateResponse(true, "Delete product success", HttpStatus.OK);
 
-          }
+        }
 
 
     }

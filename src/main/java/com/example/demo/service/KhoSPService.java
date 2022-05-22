@@ -1,11 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.DTO.KhoSPDto;
-import com.example.demo.DTO.SanPham_khoSP;
-import com.example.demo.DTO.ThuongHieuDto;
 import com.example.demo.entity.KHO_SP;
-import com.example.demo.entity.SAN_PHAM;
-import com.example.demo.entity.THUONG_HIEU;
 import com.example.demo.repository.KhoSPRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -77,6 +73,18 @@ public class KhoSPService {
 
     public List<KhoSPDto> findBySanPham_MaSP(int maSP) {
         return repo.findBySanPham_MaSP(maSP)
+                .stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
+    }
+
+
+    public List<String> selectMauTheoMaSP(int ma) {
+        return repo.selectMauTheoMaSP(ma);
+    }
+
+    public List<KhoSPDto> selectbyID_Color(int id, String mau) {
+        return repo.selectbyID_Color(id, mau)
                 .stream()
                 .map(this::convertEntityToDto)
                 .collect(Collectors.toList());

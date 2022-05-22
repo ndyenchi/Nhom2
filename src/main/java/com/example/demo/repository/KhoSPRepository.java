@@ -1,6 +1,5 @@
 package com.example.demo.repository;
 
-import com.example.demo.DTO.SanPham_khoSP;
 import com.example.demo.entity.KHO_SP;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -18,6 +17,17 @@ public interface KhoSPRepository extends JpaRepository<KHO_SP,Integer>{
     List<KHO_SP> findByMau(String mau);
     List<KHO_SP> findBySize(int size);
     List<KHO_SP> findBySanPham_MaSP(int maSP);
+
+    @Modifying
+    @Transactional
+    @Query(value = "select distinct c.mau from kho_sp c where masp=:masp", nativeQuery = true)
+    List<String>  selectMauTheoMaSP(@Param("masp") int ma);
+
+
+    @Modifying
+   @Transactional
+   @Query(value ="select * from kho_sp where masp=:masp and mau=:mau" , nativeQuery = true)
+   List<KHO_SP> selectbyID_Color(@Param("masp") int id, @Param("mau") String mau);
 //
 //    @Modifying
 //    @Transactional

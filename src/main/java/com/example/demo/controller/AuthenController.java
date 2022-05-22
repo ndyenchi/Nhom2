@@ -94,7 +94,7 @@ public class AuthenController {
 //            }
 //        }
         for(TaiKhoanKHDto t: listUser()){
-            if(t.getMaKH_taiKhoan().getEmail().equals(username)){
+            if(t.getUsername().equals(username)){
                 KHData=t;
             }
         }
@@ -108,7 +108,7 @@ public class AuthenController {
 //            }
 //        }
         for(TaiKhoanNVDto t: listNV()){
-            if(t.getMaNV().getEmail().equals(username)){
+            if(t.getUsername().equals(username)){
                 NVData=t;
             }
         }
