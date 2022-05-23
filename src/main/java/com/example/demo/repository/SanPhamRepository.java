@@ -16,5 +16,9 @@ public interface SanPhamRepository extends JpaRepository<SAN_PHAM, Integer> {
     @Transactional
     @Query(value = "SELECT * FROM SAN_PHAM c WHERE c.GIOITINH =:gioiTinh" , nativeQuery = true)
     List<SAN_PHAM> selectGioiTinh(@Param("gioiTinh") String gioiTinh);
+    @Modifying
+    @Transactional
+    @Query(value =  "INSERT INTO SAN_PHAM (MASP,GIA,GIOITINH,MOTA,TENSP, MA_THUONG_HIEU ) VALUES  (:masp,:gia,:gioitinh,:mota, :tensp, :maThuongHieu)",nativeQuery = true)
+    public void save1(@Param("masp") int masp,@Param("gia") long gia,@Param("gioitinh") String gioiTinh,@Param("mota") String mota,@Param("tensp") String tensp,@Param("maThuongHieu") String mathuonghieu);
 
 }

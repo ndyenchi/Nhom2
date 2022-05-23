@@ -47,7 +47,9 @@ public class SanPhamService {
         SAN_PHAM e = convertDtoToEntity(sp);
         repo.save(e);
     }
-
+    public void save1(SanPhamDto sp){
+        repo.save1(sp.getMaSP(),sp.getGia(),sp.getGioiTinh(),sp.getMoTa(),sp.getTenSP(),sp.getThuongHieuMaThuongHieu());
+    }
     public List<SanPhamDto> select(String gioiTinh){
         List<SAN_PHAM> e=repo.selectGioiTinh(gioiTinh);
         List<SanPhamDto> dto=new ArrayList<>();
