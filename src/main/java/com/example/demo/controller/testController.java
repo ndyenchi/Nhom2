@@ -35,7 +35,8 @@ public class testController {
                 listSize.add(c);
 
             }
-
+            B b=new B(listColor.get(i).toString(), listSize);
+            listb.add(b);
         }
         a.setChiTietSP(listb);
         a.setSanpham(sanPhamService.getbyID(masp));
