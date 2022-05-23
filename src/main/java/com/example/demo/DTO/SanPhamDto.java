@@ -19,7 +19,7 @@ public class SanPhamDto {
     private String moTa;
     private Long gia;
     private String thuongHieuMaThuongHieu;
-    private String anh;
+
 
 
 }

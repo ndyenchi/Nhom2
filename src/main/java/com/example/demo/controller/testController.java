@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/test/")
+@RequestMapping("/api/san-pham/")
 public class testController {
     @Autowired
     KhoSPService khoSPService;@Autowired
@@ -35,7 +35,10 @@ public class testController {
                 listSize.add(c);
 
             }
-            B b=new B(listColor.get(i).toString(), listSize);
+            String anh=list.get(0).getHinhAnh();
+            String[] hinhAnh=new String[4];
+            hinhAnh=anh.split(",",0);
+            B b=new B(listColor.get(i).toString(),hinhAnh, listSize);
             listb.add(b);
         }
         a.setChiTietSP(listb);

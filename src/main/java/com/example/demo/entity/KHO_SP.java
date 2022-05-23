@@ -15,30 +15,39 @@ import java.util.Collection;
 @NoArgsConstructor
 public class KHO_SP {
 
-    @Column(name="SIZE")
+    @Column(name = "SIZE")
     private Integer size;
-    @Column(name="SO_LUONG_TON")
+    @Column(name = "SO_LUONG_TON")
     private long soLuongTon;
-    @Column(name="MAU")
+    @Column(name = "MAU")
     private String mau;
     @Id
     @GeneratedValue
-    @Column(name="ID_KHO")
+    @Column(name = "ID_KHO")
     private Integer idKho;
     @OneToMany(mappedBy = "idKhoGioHang", cascade = CascadeType.ALL)
     Collection<GIO_HANG> gioHang;
-    @OneToMany(mappedBy = "idKho_HDNhap",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "idKho_HDNhap", cascade = CascadeType.ALL)
     Collection<CT_HOA_DON_NHAP> ctHoaDonNhap;
 
-    @OneToMany(mappedBy = "idKho_HDXuat",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "idKho_HDXuat", cascade = CascadeType.ALL)
     Collection<CHI_TIET_DON_HANG> ctHoaDonXuat;
 
     @ManyToOne
-    @JoinColumn(name="MASP")
+    @JoinColumn(name = "MASP")
     private SAN_PHAM sanPham;
 
     @Column(name = "ANH")
     private String hinhAnh;
-  //  private String[] hinhAnh={"","","",""};
+//  //  private String[] hinhAnh={"","","",""};
+//
+//    private String[] hinhAnh=new String[4];
+//    @Column(name = "ANH2")
+//    private String hinhAnh2;
+//    @Column(name = "ANH3")
+//    private String hinhAnh3;
+//    @Column(name = "ANH4")
+//    private String hinhAnh4;
+//}
 
 }
