@@ -29,11 +29,11 @@ public class testController {
         List<B> listb=new ArrayList<>();
         for(int i=0;i<listColor.size();i++){
             List<KhoSPDto> list =khoSPService.selectbyID_Color(masp,listColor.get(i).toString());
+            List<C> listSize=new ArrayList<>();
             for(KhoSPDto l:list){
                 C c =new C(l.getSize(),l.getSoLuongTon());
-                B b=new B(listColor.get(i).toString(), c);
-                listb.add(b);
-                System.out.println("size"+ b);
+                listSize.add(c);
+
             }
 
         }

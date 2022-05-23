@@ -2,6 +2,8 @@ package com.example.demo.DTO;
 
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Getter
 @Setter
@@ -9,5 +11,5 @@ import lombok.*;
 @AllArgsConstructor
 public class B {
     private String color;
-    private C soluong;
+    private List<C> soluong;
 }
