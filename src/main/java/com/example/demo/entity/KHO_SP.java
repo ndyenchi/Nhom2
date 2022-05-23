@@ -30,7 +30,7 @@ public class KHO_SP {
     @OneToMany(mappedBy = "idKho_HDNhap", cascade = CascadeType.ALL)
     Collection<CT_HOA_DON_NHAP> ctHoaDonNhap;
 
-    @OneToMany(mappedBy = "idKho_HDXuat", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "idKhoHDXuat", cascade = CascadeType.ALL)
     Collection<CHI_TIET_DON_HANG> ctHoaDonXuat;
 
     @ManyToOne

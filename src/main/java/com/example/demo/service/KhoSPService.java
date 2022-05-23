@@ -75,6 +75,10 @@ public class KhoSPService {
     }
 
 
+    public KhoSPDto selectbyID_Color_size(int id, String mau, int size) {
+        return convertEntityToDto(repo.selectbyID_Color_size(id, mau, size).get(0));
+    }
+
     public void save1(int masp, String gia, String gioiTinh, int mota, long tensp, int mathuonghieu) {
         repo.save1(masp, gia, gioiTinh, mota, tensp, mathuonghieu);
     }
@@ -86,6 +90,10 @@ public class KhoSPService {
                 .collect(Collectors.toList());
     }
 
+
+    public void update(int masp, int gia) {
+        repo.update(masp, gia);
+    }
 
     public List<String> selectMauTheoMaSP(int ma) {
         return repo.selectMauTheoMaSP(ma);

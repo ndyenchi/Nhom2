@@ -12,5 +12,5 @@ public class ChiTietDonHangDto {
     private  String ghiChu;
     private  String soLuongXuat;
     private  DonHangDto maHDXuat;
-    private  KhoSPDto idKho_HDXuat;
+    private  KhoSPDto idKhoHDXuat;
 }

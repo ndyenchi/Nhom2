@@ -28,7 +28,7 @@ public class CHI_TIET_DON_HANG {
 
     @ManyToOne
     @JoinColumn(name="ID_KHO")
-    private KHO_SP idKho_HDXuat;
+    private KHO_SP idKhoHDXuat;
 
 
 }
