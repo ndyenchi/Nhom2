@@ -64,28 +64,36 @@ public class NhanVienController {
         return ResponseHelper.GenerateResponse(true, "Delete employee success", HttpStatus.OK);
     }
     @PatchMapping("tai-khoan/{id}")
-   public ResponseEntity edit(@PathVariable String id ,@RequestBody Map<String, Object> fields){
-        TaiKhoanNVDto dto=taiKhoanNVService.findById(id);
-        fields.forEach((k, v) -> {
-            Field field = ReflectionUtils.findField(TaiKhoanNVDto.class, k);
-            field.setAccessible(true);
-            ReflectionUtils.setField(field, dto, v);
-        });
-        taiKhoanNVService.save(dto);
-            return ResponseHelper.GenerateResponse(true, "Edit employee success", HttpStatus.OK);
+   public ResponseEntity edit(@PathVariable String id ,@RequestBody List<Map<String, Object>> fields) {
+        TaiKhoanNVDto dto = taiKhoanNVService.findById(id);
+        for (int i = 0; i < fields.size(); i++) {
+            fields.get(i).forEach((k, v) -> {
+                Field field = ReflectionUtils.findField(TaiKhoanNVDto.class, k);
+                field.setAccessible(true);
+                ReflectionUtils.setField(field, dto, v);
+            });
 
         }
-    @PatchMapping("{id}")
-    public ResponseEntity editnhanVien(@PathVariable String id ,@RequestBody Map<String, Object> fields){
+        taiKhoanNVService.save(dto);
+        return ResponseHelper.GenerateResponse(true, "Edit employee success", HttpStatus.OK);
+    }
+        @PatchMapping("{id}")
+    public ResponseEntity editnhanVien(@PathVariable String id ,@RequestBody NhanVienDto nhanVienDto){
         TaiKhoanNVDto dto=taiKhoanNVService.findById(id);
         NhanVienDto nv=nhanVienService.findById(dto.getMaNV().getCmnd());
-        fields.forEach((k, v) -> {
-            Field field = ReflectionUtils.findField(NhanVienDto.class, k);
-            field.setAccessible(true);
-            ReflectionUtils.setField(field, nv, v);
-        });
-        nhanVienService.save(nv);
-        return ResponseHelper.GenerateResponse(true, "Edit employee success", HttpStatus.OK);
+//        fields.forEach((k, v) -> {
+//            Field field = ReflectionUtils.findField(NhanVienDto.class, k);
+//            field.setAccessible(true);
+//            ReflectionUtils.setField(field, nv, v);
+//        });
+            if(nv.getCmnd().equals(nhanVienDto.getCmnd())){
+                nhanVienService.save(nhanVienDto);
+                return ResponseHelper.GenerateResponse(true, "Edit employee success", HttpStatus.OK);
+
+            }else{
+                return ResponseHelper.GenerateResponse(false, "Edit employee success", HttpStatus.OK);
+
+            }
 
     }
 //    @GetMapping("getAll")

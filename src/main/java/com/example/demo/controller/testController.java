@@ -76,17 +76,24 @@ public class testController {
 
         @PostMapping()
     public ResponseEntity insert (@RequestBody SanPham_khoSP sp){
+
+        int id_kho=0;
         for (KhoSPDto khoSPDto: khoSPService.ListAll()){
             if(sp.getMaSP()==khoSPDto.getSanPham().getMaSP() && sp.getSize() == khoSPDto.getSize() && sp.getMau().equals(khoSPDto.getMau()))
             {
                 return ResponseHelper.GenerateResponse(false, "Cant create product", HttpStatus.OK);
             }
+            else id_kho=khoSPService.ListAll().size();
+
         }
+            System.out.println(id_kho);
             List<SanPhamDto> listsanPham=sanPhamService.getAll();
         for (int i=0;i<listsanPham.size();i++) {
             if (listsanPham.get(i).getMaSP() == sp.getMaSP()) {
                 KhoSPDto b = new KhoSPDto(sp.getSize(), sp.getSoLuongTon(), sp.getMau(), sanPhamService.getbyID(sp.getMaSP()), sp.getHinhAnh(), sp.getIdKho());
-                khoSPService.save(b);
+                b.setIdKho(khoSPService.ListAll().size()+1);
+                khoSPService.save1(b.getIdKho(), b.getHinhAnh(),b.getMau(),b.getSize(),b.getSoLuongTon(),b.getSanPham().getMaSP());
+
                 return ResponseHelper.GenerateResponse(true, "Create product success", HttpStatus.OK);
 
             }
@@ -96,12 +103,30 @@ public class testController {
         if(listsanPham.get(sl-1).getMaSP()!= sp.getMaSP()){
                 SanPhamDto a= new SanPhamDto(sp.getMaSP(),sp.getTenSP(),sp.getGioiTinh(),sp.getMoTa(),sp.getGia(),
                         sp.getMaThuongHieu());
+           //     a.setMaSP(sl);
                 sanPhamService.save1(a);
                 KhoSPDto b= new KhoSPDto(sp.getSize(),sp.getSoLuongTon(),sp.getMau(),a,sp.getHinhAnh(),sp.getIdKho() );
-                khoSPService.save(b);
+                b.setIdKho(khoSPService.ListAll().size()+1);
+                khoSPService.save1(b.getIdKho(), b.getHinhAnh(),b.getMau(),b.getSize(),b.getSoLuongTon(),b.getSanPham().getMaSP());
                 return ResponseHelper.GenerateResponse(true, "Create product success", HttpStatus.OK);
 
             }
             return ResponseHelper.GenerateResponse(true, "Create product success", HttpStatus.OK);
         }
+
+    @DeleteMapping("{maSP}")
+    public ResponseEntity delete(@PathVariable int maSP){
+        List<KhoSPDto> a=khoSPService.findBySanPham_MaSP(maSP);
+        if (a.size()>0){
+            return ResponseHelper.GenerateResponse(false, "Cant not delete product", HttpStatus.OK);
+
+        }else{
+
+            sanPhamService.delete(maSP);
+            return ResponseHelper.GenerateResponse(true, "Delete product success", HttpStatus.OK);
+
+        }
+
+
+    }
 }

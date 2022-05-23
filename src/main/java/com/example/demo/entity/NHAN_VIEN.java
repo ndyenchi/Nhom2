@@ -21,7 +21,7 @@ public class NHAN_VIEN {
     @Column(name="HO_TEN")
     private String hoTen;
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern="DD/MM/YYYY")
+    @DateTimeFormat(pattern="YYYY-MM-DD")
     @Column(name="NGAY_SINH")
     private Date ngaySinh;
     @Id

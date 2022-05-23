@@ -28,6 +28,13 @@ public interface KhoSPRepository extends JpaRepository<KHO_SP,Integer>{
    @Transactional
    @Query(value ="select * from kho_sp where masp=:masp and mau=:mau" , nativeQuery = true)
    List<KHO_SP> selectbyID_Color(@Param("masp") int id, @Param("mau") String mau);
+
+
+    @Modifying
+    @Transactional
+    @Query(value =  "INSERT INTO KHO_SP (ID_KHO, ANH, MAU, SIZE, SO_LUONG_TON, MASP) VALUES  (:id,:anh,:mau,:size, :soluong, :masp)",nativeQuery = true)
+    public void save1(@Param("id") int masp,@Param("anh") String gia,@Param("mau") String gioiTinh,@Param("size") int mota,@Param("soluong") long tensp,@Param("masp") int mathuonghieu);
+
 //
 //    @Modifying
 //    @Transactional

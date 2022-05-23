@@ -6,8 +6,11 @@ import com.example.demo.repository.KhoSPRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -69,6 +72,11 @@ public class KhoSPService {
     public void save(KhoSPDto dto){
         KHO_SP e=convertDtoToEntity(dto);
         repo.save(e);
+    }
+
+
+    public void save1(int masp, String gia, String gioiTinh, int mota, long tensp, int mathuonghieu) {
+        repo.save1(masp, gia, gioiTinh, mota, tensp, mathuonghieu);
     }
 
     public List<KhoSPDto> findBySanPham_MaSP(int maSP) {
