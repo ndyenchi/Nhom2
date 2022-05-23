@@ -80,14 +80,22 @@ public class HoaDonXuatController {
         return ResponseHelper.GenerateResponse(true, "Create bill success", HttpStatus.OK);
 
     }
-
-//    @PostMapping("post")
-//    public List<DonHangDto> postHoaDonXuat(@RequestBody DonHangDto HoaDonXuat) {
-//        List<DonHangDto> HoaDonXuatList = HoaDonXuatSV.ListAll();
-//
-//        HoaDonXuatList.add(HoaDonXuat);
-//        HoaDonXuatSV.save(HoaDonXuat);
-//        // Trả về trang thành công success.html
-//        return HoaDonXuatList;
-//    }
+    @PostMapping("tao-hd")
+    public ResponseEntity taoHD(@RequestBody DonHangDto dto){
+        HoaDonXuatSV.save(dto);
+        return ResponseHelper.GenerateResponse(true, "Create bill success", HttpStatus.OK);
+    }
+    @PostMapping("tao-ct-hd")
+    public ResponseEntity taoCT(@RequestBody ChiTietDonHangDto dto){
+        chi_tiet_hoa_don_xuat_service.save(dto);
+        KhoSPDto t = new KhoSPDto();
+        for(KhoSPDto sp: khoSPService.ListAll()) {
+            if (t.getIdKho()==dto.getIdKhoHDXuat().getIdKho()) {
+                t = sp;
+            }
+        }
+        t.setSoLuongTon(t.getSoLuongTon()-dto.getSoLuongXuat());
+        khoSPService.save(t);
+        return ResponseHelper.GenerateResponse(true, "Create bill success", HttpStatus.OK);
+    }
 }

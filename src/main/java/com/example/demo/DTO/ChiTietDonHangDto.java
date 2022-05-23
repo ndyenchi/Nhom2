@@ -10,7 +10,7 @@ import lombok.*;
 public class ChiTietDonHangDto {
     private  Integer idHoaDonXuat;
     private  String ghiChu;
-    private  String soLuongXuat;
+    private  int soLuongXuat;
     private  DonHangDto maHDXuat;
     private  KhoSPDto idKhoHDXuat;
 }

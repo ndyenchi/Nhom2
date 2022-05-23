@@ -63,16 +63,22 @@ public class HoaDonNhapController {
     public List<ChiTieHoaDonNhapDto> list(@PathVariable int id) {
         return ctHoaDonNhapService.findByHoaDon_MaHDNhap(id);
     }
-
-//    @PostMapping("")
-//    public ResponseEntity create(@RequestBody CT_HoaDonNhap dto) {
-//        KhoSPDto k=khoSPService.selectbyID_Color_size(dto.getMaSP(), dto.getMau(),dto.getSize());
-//        NhanVienDto nv=nhanVienService.findById(dto.getMaNV());
-//        HoaDonNhapDto hd=new HoaDonNhapDto(1,nv,dto.getNgayNhap(), dto.getTongTien());
-//        ChiTieHoaDonNhapDto ct=new ChiTieHoaDonNhapDto(1,hd,dto.getSoLuongNhap(),k,dto.getGia_Nhap());
-//        hoaDonNhapService.save(hd);
-//        ctHoaDonNhapService.save(ct);
-//        return ResponseHelper.GenerateResponse(true, "delete bill success", HttpStatus.OK);
-//
-//    }
+    @PostMapping("tao-hd")
+    public ResponseEntity TaoHD(@RequestBody HoaDonNhapDto dto){
+        hoaDonNhapService.save(dto);
+        return ResponseHelper.GenerateResponse(true, "Create bill success", HttpStatus.OK);
+    }
+    @PostMapping("tao-ct-hd")
+    public ResponseEntity taoCT(@RequestBody ChiTieHoaDonNhapDto dto){
+        ctHoaDonNhapService.save(dto);
+        KhoSPDto t = new KhoSPDto();
+        for(KhoSPDto sp: khoSPService.ListAll()) {
+            if (t.getIdKho()==dto.getIdKho_HDNhap().getIdKho()) {
+                t = sp;
+            }
+        }
+        t.setSoLuongTon(t.getSoLuongTon()+dto.getSoLuongNhap());
+        khoSPService.save(t);
+        return ResponseHelper.GenerateResponse(true, "Create bill success", HttpStatus.OK);
+    }
 }
