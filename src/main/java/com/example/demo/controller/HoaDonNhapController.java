@@ -38,11 +38,13 @@ public class HoaDonNhapController {
     }
     @DeleteMapping("{id}")
     public ResponseEntity<Object> delete(@PathVariable int id){
-
         ctHoaDonNhapService.delete(id);
         hoaDonNhapService.delete(ctHoaDonNhapService.get(id).getIdHoaDonNhap());
-        return ResponseHelper.GenerateResponse(true, "Create employee success", HttpStatus.OK);
+        return ResponseHelper.GenerateResponse(true, "delete bill success", HttpStatus.OK);
     }
-
+@GetMapping("hoa-don-nhap/{id}")
+    public List<ChiTieHoaDonNhapDto> list(@PathVariable int id){
+        return ctHoaDonNhapService.findByHoaDon_MaHDNhap(id);
+}
 
 }

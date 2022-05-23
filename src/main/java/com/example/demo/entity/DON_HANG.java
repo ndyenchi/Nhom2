@@ -24,10 +24,10 @@ public class DON_HANG {
     private long tongTien;
     @Column(name="NGAY")
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern="DD/MM/YYYY")
+    @DateTimeFormat(pattern="YYYY-MM-DD")
     private Date ngay;
     @Column(name="TRANG_THAI")
-    private String xacNhan;
+    private String trangThai;
     @ManyToOne
     @JoinColumn(name="CMND")
     private NHAN_VIEN ma_NV;

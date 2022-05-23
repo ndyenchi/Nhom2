@@ -77,7 +77,7 @@ public class NhanVienController {
         taiKhoanNVService.save(dto);
         return ResponseHelper.GenerateResponse(true, "Edit employee success", HttpStatus.OK);
     }
-        @PatchMapping("{id}")
+        @PostMapping("edit/{id}")
     public ResponseEntity editnhanVien(@PathVariable String id ,@RequestBody NhanVienDto nhanVienDto){
         TaiKhoanNVDto dto=taiKhoanNVService.findById(id);
         NhanVienDto nv=nhanVienService.findById(dto.getMaNV().getCmnd());

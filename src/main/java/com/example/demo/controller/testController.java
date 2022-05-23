@@ -6,6 +6,7 @@ import com.example.demo.service.KhoSPService;
 import com.example.demo.service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
@@ -35,9 +36,9 @@ public class testController {
                 listSize.add(c);
 
             }
-            String anh=list.get(0).getHinhAnh();
+            String anh=list.get(i).getHinhAnh();
             String[] hinhAnh=new String[4];
-            hinhAnh=anh.split(",",0);
+            hinhAnh=anh.split(";");
             B b=new B(listColor.get(i).toString(),hinhAnh, listSize);
             listb.add(b);
         }
@@ -61,9 +62,9 @@ public class testController {
                     listSize.add(c);
 
                 }
-                String anh=list.get(0).getHinhAnh();
+                String anh=list.get(i).getHinhAnh();
                 String[] hinhAnh=new String[4];
-                hinhAnh=anh.split(",",0);
+                hinhAnh=anh.split(";");
                 B b=new B(listColor.get(i).toString(),hinhAnh, listSize);
                 listb.add(b);
             }
@@ -107,6 +108,7 @@ public class testController {
                 sanPhamService.save1(a);
                 KhoSPDto b= new KhoSPDto(sp.getSize(),sp.getSoLuongTon(),sp.getMau(),a,sp.getHinhAnh(),sp.getIdKho() );
                 b.setIdKho(khoSPService.ListAll().size()+1);
+            System.out.println(b.getIdKho());
                 khoSPService.save1(b.getIdKho(), b.getHinhAnh(),b.getMau(),b.getSize(),b.getSoLuongTon(),b.getSanPham().getMaSP());
                 return ResponseHelper.GenerateResponse(true, "Create product success", HttpStatus.OK);
 
@@ -127,6 +129,13 @@ public class testController {
 
         }
 
+
+    }
+    @PostMapping("{masp}")
+    private ResponseEntity editproduct(@PathVariable int masp, @RequestBody SanPhamDto dto){
+        dto.setMaSP(masp);
+        sanPhamService.save(dto);
+        return ResponseHelper.GenerateResponse(true, "Edit product success", HttpStatus.OK);
 
     }
 }

@@ -14,7 +14,7 @@ public class DonHangDto {
     private  Integer maHD;
     private  long tongTien;
     private  Date ngay;
-    private  String xacNhan;
+    private  String trangThai;
     private  NhanVienDto ma_NV;
     private  KhachHangDto maKH_hoaDonXuat;
 }

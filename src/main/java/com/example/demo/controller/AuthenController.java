@@ -178,7 +178,7 @@ public class AuthenController {
     public ResponseEntity<Object> Register(@Valid @RequestBody RegisterUserRequest request) {
 
         TaiKhoanKHDto Data = new TaiKhoanKHDto();
-        String username = request.getEmail();
+        String username = request.getUsername();
         for(int i= 0; i < listUser().size(); i++ ){
             if(username.compareTo(listUser().get(i).getUsername()) == 0 ){
                 Data = listUser().get(i);
@@ -201,13 +201,13 @@ public class AuthenController {
 
 //                tkKH_new.setUsername(request.getUsername());
 //                tkKH_new.setPassword(request.getPassword());
-                taiKhoanKHService.insert(request.getEmail(), request.getPassword(), maKH);
+                taiKhoanKHService.insert(request.getUsername(), request.getPassword(), maKH);
 
                 return ResponseHelper.GenerateResponse(true, "register user successfully", HttpStatus.OK);
 
             }
 
-            return ResponseHelper.GenerateResponse(false, "email exists", HttpStatus.BAD_REQUEST);
+            return ResponseHelper.GenerateResponse(false, "username has exists", HttpStatus.BAD_REQUEST);
 
 
         } catch (Exception ex) {

@@ -60,5 +60,11 @@ public class CHI_TIET_HOA_DON_NHAP_SERVICE {
         repo.save(convertDtoToEntity(CTHoaDonNhap));
     }
 
+    public List<ChiTieHoaDonNhapDto> findByHoaDon_MaHDNhap(int maHDNhap) {
+        return repo.findByHoaDon_MaHDNhap(maHDNhap)
+                .stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
 
+    }
 }
